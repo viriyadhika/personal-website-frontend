@@ -1,6 +1,12 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import { ArrayRule, ArrayRuleCategory, Param, StringOption } from "./type";
+import {
+  ArrayRule,
+  ArrayRuleCategory,
+  NumberOption,
+  Param,
+  StringOption,
+} from "./type";
 
 export function editArray<T>(array: T[], item: T, idx: number) {
   const starting = array.slice(0, idx);
@@ -12,6 +18,10 @@ export const dateManager = (function () {
   dayjs.extend(duration);
   return dayjs;
 })();
+
+export function formatDate(timestamp: number) {
+  return dateManager.unix(timestamp).format("YYYY-MM-DD");
+}
 
 export function generateRandomNumber(start: number, end: number) {
   return Math.floor(Math.random() * (end - start + 1) + start);
@@ -45,10 +55,16 @@ export function map(obj: any): Param {
   }
 
   if (typeof obj === "number") {
-    return { type: "number", value: obj, config: {} };
+    return {
+      type: "number",
+      value: obj,
+      config: {
+        option: NumberOption.HARDCODED,
+      },
+    };
   }
 
-  if (typeof obj === "number") {
+  if (typeof obj === "boolean") {
     return { type: "boolean", value: obj, config: {} };
   }
 
@@ -85,6 +101,17 @@ export function generate(obj: Param): any {
         )}/200/30`;
       default:
         return obj.value;
+    }
+  }
+
+  if (obj.type === "number") {
+    switch (obj.config.option) {
+      case NumberOption.RANDOM_BETWEEN:
+        return generateRandomNumber(obj.config.start, obj.config.end);
+      case NumberOption.HARDCODED:
+      case NumberOption.TIMESTAMP:
+      default:
+        obj.value;
     }
   }
 

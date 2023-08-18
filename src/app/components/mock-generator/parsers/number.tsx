@@ -1,14 +1,15 @@
 import { DatePicker, Input, Select, Typography } from "@arco-design/web-react";
 import { ReactNode, useState } from "react";
-import { Param } from "../type";
+import { NumberOption, Param } from "../type";
 import dayjs from "dayjs";
+import { formatDate } from "../utils";
+import NumberInput from "../components/number-input";
 
-const enum NumberOption {
-  HARDCODED = "HARDCODED",
-  TIMESTAMP = "TIMESTAMP",
-}
-
-const options = [NumberOption.HARDCODED, NumberOption.TIMESTAMP];
+const options = [
+  NumberOption.HARDCODED,
+  NumberOption.TIMESTAMP,
+  NumberOption.RANDOM_BETWEEN,
+];
 
 export default function NumberParser({
   defaultValue,
@@ -25,18 +26,32 @@ export default function NumberParser({
     [NumberOption.TIMESTAMP]: (
       <TimeStamp onChange={onChange} defaultValue={dayjs().unix()} />
     ),
+    [NumberOption.RANDOM_BETWEEN]: <RandomBetween onChange={onChange} />,
   };
 
   const defaultValueMap: Record<NumberOption, Param> = {
     [NumberOption.HARDCODED]: {
       type: "number",
       value: defaultValue,
-      config: {},
+      config: {
+        option: NumberOption.HARDCODED,
+      },
     },
     [NumberOption.TIMESTAMP]: {
       type: "number",
       value: dayjs().unix(),
-      config: {},
+      config: {
+        option: NumberOption.TIMESTAMP,
+      },
+    },
+    [NumberOption.RANDOM_BETWEEN]: {
+      type: "number",
+      value: dayjs().unix(),
+      config: {
+        option: NumberOption.RANDOM_BETWEEN,
+        start: 0,
+        end: 0,
+      },
     },
   };
 
@@ -70,7 +85,13 @@ function HardCoded({
       return;
     }
     setValue(newVal);
-    onChange({ type: "number", value: Number(newVal), config: {} });
+    onChange({
+      type: "number",
+      value: Number(newVal),
+      config: {
+        option: NumberOption.HARDCODED,
+      },
+    });
   }
 
   return (
@@ -80,10 +101,6 @@ function HardCoded({
       onChange={handleChange}
     />
   );
-}
-
-function formatDate(timestamp: number) {
-  return dayjs.unix(timestamp).format("YYYY-MM-DD");
 }
 
 function TimeStamp({
@@ -97,8 +114,53 @@ function TimeStamp({
   function handleChange(newVal: string) {
     const timestamp = dayjs(newVal).unix();
     setValue(timestamp);
-    onChange({ type: "number", value: timestamp, config: {} });
+    onChange({
+      type: "number",
+      value: timestamp,
+      config: {
+        option: NumberOption.TIMESTAMP,
+      },
+    });
   }
 
   return <DatePicker value={formatDate(value)} onChange={handleChange} />;
+}
+
+function RandomBetween({ onChange }: { onChange: (param: Param) => void }) {
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  return (
+    <>
+      <NumberInput
+        value={from}
+        onChange={(newFrom) => {
+          setFrom(newFrom.toString());
+          onChange({
+            type: "number",
+            value: 0,
+            config: {
+              option: NumberOption.RANDOM_BETWEEN,
+              start: Number(newFrom),
+              end: Number(to),
+            },
+          });
+        }}
+      />
+      <NumberInput
+        value={to}
+        onChange={(newTo) => {
+          setTo(newTo.toString());
+          onChange({
+            type: "number",
+            value: 0,
+            config: {
+              option: NumberOption.RANDOM_BETWEEN,
+              start: Number(from),
+              end: Number(newTo),
+            },
+          });
+        }}
+      />
+    </>
+  );
 }

@@ -1,8 +1,15 @@
 import { ArrayRule, ArrayRuleCategory, Param } from "./type";
-import { Button, Collapse, Input, Select } from "@arco-design/web-react";
+import {
+  Button,
+  Collapse,
+  DatePicker,
+  Input,
+  Select,
+} from "@arco-design/web-react";
 import { ReactNode, useState } from "react";
-import { dateManager, editArray } from "./utils";
+import { dateManager, editArray, formatDate } from "./utils";
 import Parser from "./parser";
+import NumberInput from "./components/number-input";
 
 const { Item: CollapseItem } = Collapse;
 
@@ -21,16 +28,12 @@ export default function ArrayParser({
   const [arrayContent, setArrayContent] = useState(defaultArrayContent);
   const [rules, setRules] = useState<ArrayRule[]>([]);
 
-  function handeSizeChange(size: string) {
-    if (isNaN(Number(size))) {
-      return;
-    }
-
-    setSize(size);
+  function handeSizeChange(size: number) {
+    setSize(size.toString());
     onChange({
       type: "array",
       config: {
-        size: Number(size),
+        size,
         rules,
       },
       value: arrayContent,
@@ -40,7 +43,7 @@ export default function ArrayParser({
   return (
     <Collapse defaultActiveKey={"Array"}>
       <CollapseItem name={"Array"} header={"Array"}>
-        <Input
+        <NumberInput
           placeholder="size"
           value={String(size)}
           onChange={handeSizeChange}
@@ -120,7 +123,7 @@ function RuleList({
       </Button>
       <Button
         onClick={() => {
-          const newRules = rules.slice(0, options.length - 1);
+          const newRules = rules.slice(0, rules.length - 1);
           onChange(newRules);
         }}
       >
@@ -130,7 +133,7 @@ function RuleList({
   );
 }
 
-const options = [ArrayRuleCategory.TIME_SERIES];
+const options = [ArrayRuleCategory.TIME_SERIES, ArrayRuleCategory.TOTAL];
 
 function Rule({
   arrayContent,
@@ -145,6 +148,13 @@ function Rule({
     [ArrayRuleCategory.TIME_SERIES]: (
       <TimeSeries arrayContent={arrayContent} rule={rule} onChange={onChange} />
     ),
+    [ArrayRuleCategory.TOTAL]: (
+      <Restriction
+        arrayContent={arrayContent}
+        rule={rule}
+        onChange={onChange}
+      />
+    ),
   };
 
   return (
@@ -155,6 +165,7 @@ function Rule({
           onChange({
             ...rule,
             category: selection,
+            payload: {},
           });
         }}
         value={rule.category}
@@ -173,17 +184,132 @@ function TimeSeries({
   rule: ArrayRule;
   onChange: (newRule: ArrayRule) => void;
 }) {
+  const [startTimestamp, setStartTimestamp] = useState<number>(
+    dateManager().unix()
+  );
+  const [path, setPath] = useState("");
+  const [periodValue, setPeriodValue] = useState<{
+    value: number;
+    unit: "days" | "hours";
+  }>({
+    value: 1,
+    unit: "days",
+  });
+
   return (
     <>
       <Select
         options={generateNumberFields(arrayContent, [])}
-        onChange={(path: string) => {
+        onChange={(newPath: string) => {
+          setPath(newPath);
           onChange({
             ...rule,
+            category: ArrayRuleCategory.TIME_SERIES,
+            payload: {
+              path: newPath,
+              startTimestamp: startTimestamp,
+              period: dateManager
+                .duration({ [periodValue.unit]: periodValue.value })
+                .asMilliseconds(),
+            },
+          });
+        }}
+      />
+      <DatePicker
+        value={formatDate(startTimestamp)}
+        onChange={(newValue: string) => {
+          const newStartTimestamp = dateManager(newValue).unix();
+          setStartTimestamp(newStartTimestamp);
+          onChange({
+            ...rule,
+            category: ArrayRuleCategory.TIME_SERIES,
             payload: {
               path,
-              startTimestamp: dateManager().unix(),
-              period: dateManager.duration({ days: 1 }).asMilliseconds(),
+              startTimestamp: newStartTimestamp,
+              period: dateManager
+                .duration({ [periodValue.unit]: periodValue.value })
+                .asMilliseconds(),
+            },
+          });
+        }}
+      />
+      <Input
+        value={periodValue.value.toString()}
+        onChange={(newValue: string) => {
+          if (isNaN(Number(newValue))) {
+            return;
+          }
+          setPeriodValue((cur) => ({ ...cur, value: Number(newValue) }));
+          onChange({
+            ...rule,
+            category: ArrayRuleCategory.TIME_SERIES,
+            payload: {
+              path,
+              startTimestamp,
+              period: dateManager
+                .duration({ [periodValue.unit]: Number(newValue) })
+                .asMilliseconds(),
+            },
+          });
+        }}
+      />
+      <Select
+        options={["days", "hours"]}
+        value={periodValue.unit}
+        onChange={(newValue: "days" | "hours") => {
+          setPeriodValue((cur) => ({ ...cur, unit: newValue }));
+          onChange({
+            ...rule,
+            category: ArrayRuleCategory.TIME_SERIES,
+            payload: {
+              path,
+              startTimestamp,
+              period: dateManager
+                .duration({ [newValue]: periodValue.value })
+                .asMilliseconds(),
+            },
+          });
+        }}
+      />
+    </>
+  );
+}
+
+function Restriction({
+  arrayContent,
+  rule,
+  onChange,
+}: {
+  arrayContent: Param;
+  rule: ArrayRule;
+  onChange: (newRule: ArrayRule) => void;
+}) {
+  const [total, setTotal] = useState<string>("");
+  const [path, setPath] = useState("");
+  return (
+    <>
+      <Select
+        options={generateNumberFields(arrayContent, [])}
+        onChange={(newPath: string) => {
+          setPath(newPath);
+          onChange({
+            category: ArrayRuleCategory.TOTAL,
+            payload: {
+              path: newPath,
+              total: Number(total),
+            },
+          });
+        }}
+      />
+      <NumberInput
+        value={total.toString()}
+        onChange={(newValue) => {
+          setTotal(newValue.toString());
+          onChange({
+            category: ArrayRuleCategory.TOTAL,
+            payload: {
+              path: path,
+              total: newValue,
             },
           });
         }}

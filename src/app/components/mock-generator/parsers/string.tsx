@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import { Param, StringOption } from "../type";
 import { editArray } from "../utils";
 import { Button, Input, Select, Typography } from "@arco-design/web-react";
+import NumberInput from "../components/number-input";
 const options = [
   StringOption.HARDCODED,
   StringOption.IMAGE,
@@ -138,24 +139,24 @@ function RandomWithOption({
 
 function Random({ onChange }: { onChange: (param: Param) => void }) {
   const [size, setSize] = useState("");
-  function handleChange(newVal: string) {
-    if (isNaN(Number(newVal))) {
-      return;
-    }
-
-    setSize(newVal);
+  function handleChange(newVal: number) {
+    setSize(newVal.toString());
     onChange({
       type: "string",
       value: "",
       config: {
         option: StringOption.RANDOM_CHARACTERS,
-        size: Number(newVal),
+        size: newVal,
       },
     });
   }
 
   return (
-    <Input placeholder="Insert size" value={size} onChange={handleChange} />
+    <NumberInput
+      placeholder="Insert size"
+      value={size}
+      onChange={handleChange}
+    />
   );
 }
 

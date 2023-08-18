@@ -1,9 +1,34 @@
 export type Param =
   | { type: ObjectType; value: any; config: any }
   | ArrayParam
-  | StringParam;
+  | StringParam
+  | NumberParam;
 
-export type ObjectType = "boolean" | "object" | "number";
+export type ObjectType = "boolean" | "object";
+
+export type NumberParam =
+  | {
+      type: "number";
+      value: number;
+      config: {
+        option: NumberOption.HARDCODED | NumberOption.TIMESTAMP;
+      };
+    }
+  | {
+      type: "number";
+      value: number;
+      config: {
+        option: NumberOption.RANDOM_BETWEEN;
+        start: number;
+        end: number;
+      };
+    };
+
+export enum NumberOption {
+  HARDCODED = "HARDCODED",
+  TIMESTAMP = "TIMESTAMP",
+  RANDOM_BETWEEN = "RANDOM_BETWEEN",
+}
 
 export type ArrayParam = {
   type: "array";
@@ -34,9 +59,10 @@ export type StringParam = {
 
 export enum ArrayRuleCategory {
   TIME_SERIES = "TIME_SERIES",
+  TOTAL = "TOTAL",
 }
 
-export type ArrayRule = ArrayRuleTimeSeries;
+export type ArrayRule = ArrayRuleTimeSeries | ArrayRuleTotal;
 
 export type ArrayRuleTimeSeries = {
   category: ArrayRuleCategory.TIME_SERIES;
@@ -45,6 +71,16 @@ export type ArrayRuleTimeSeries = {
         path: string;
         startTimestamp: number;
         period: number;
+      }
+    | EmptyObj;
+};
+
+export type ArrayRuleTotal = {
+  category: ArrayRuleCategory.TOTAL;
+  payload:
+    | {
+        path: string;
+        total: number;
       }
     | EmptyObj;
 };
