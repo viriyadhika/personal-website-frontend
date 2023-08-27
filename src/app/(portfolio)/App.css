@@ -1,0 +1,163 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (min-width: 100px) {
+  .card-title {
+    display: none;
+  }
+
+  .card-subtitle {
+    display: none;
+  }
+  .project-grid {
+    justify-items: center;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: auto;
+  }
+}
+
+@media (min-width: 300px) {
+  .card-title {
+    display: block;
+  }
+
+  .card-title-text {
+    font-size: 1.5rem;
+  }
+
+  .card-subtitle {
+    display: block;
+  }
+  .project-grid {
+    justify-items: center;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: auto;
+  }
+}
+
+@media (min-width: 800px) {
+
+  .card-title-text {
+    font-size: 2rem;
+  }
+
+  .project-grid {
+    justify-items: center;
+    grid-gap: 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (min-width: 1000px) {
+  .project-grid {
+    justify-items: center;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: auto auto auto;
+  }
+}
+
+
+
+
+.project-card-img:hover ~ .project-card-desc{
+  visibility: visible;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+}
+
+.project-card-desc:hover {
+  visibility: visible;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+}
+
+.project-card-desc {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  color: white;
+  visibility: hidden;
+  transition: visibility .2s, opacity .2s, background-color .2s;
+  opacity: 0;
+}
+
+.project-card {
+  border-radius: 0;
+  position: relative;
+}
+
+.project-card-link {
+  color: white;
+}
+
+.project-card-link:hover {
+  color: white;
+}
+
+.project-desc {
+  text-align: start;
+  margin-top: 2rem;
+}
+
+.iframe-container {
+  position: relative;
+  margin-bottom: 4rem;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
