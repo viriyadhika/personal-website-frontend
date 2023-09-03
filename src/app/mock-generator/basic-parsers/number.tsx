@@ -1,8 +1,8 @@
 import { DatePicker, Input, Select, Typography } from "@arco-design/web-react";
 import { ReactNode, useState } from "react";
-import { NumberOption, Param } from "../type";
+import { NumberOption, Param } from "../utils/type";
 import dayjs from "dayjs";
-import { formatDate } from "../utils";
+import { formatDate } from "../utils/utils";
 import NumberInput from "../components/number-input";
 
 const options = [

@@ -1,5 +1,5 @@
 import { Checkbox } from "@arco-design/web-react";
-import { Param } from "../type";
+import { Param } from "../utils/type";
 import { useState } from "react";
 
 export default function BooleanParser({

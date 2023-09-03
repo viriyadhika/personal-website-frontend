@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import { Param, StringOption } from "../type";
-import { editArray } from "../utils";
+import { Param, StringOption } from "../utils/type";
+import { editArray } from "../utils/utils";
 import { Button, Input, Select, Typography } from "@arco-design/web-react";
 import NumberInput from "../components/number-input";
 const options = [

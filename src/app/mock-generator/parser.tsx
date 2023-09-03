@@ -1,9 +1,9 @@
-import ArrayParser from "./array";
-import BooleanParser from "./parsers/boolean";
-import NumberParser from "./parsers/number";
-import ObjectParser from "./object";
-import { Param } from "./type";
-import StringParser from "./parsers/string";
+import ArrayParser from "./nested-parsers/array";
+import BooleanParser from "./basic-parsers/boolean";
+import NumberParser from "./basic-parsers/number";
+import ObjectParser from "./nested-parsers/object";
+import { Param } from "./utils/type";
+import StringParser from "./basic-parsers/string";
 
 export default function Parser({
   param,

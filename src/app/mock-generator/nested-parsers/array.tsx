@@ -1,4 +1,4 @@
-import { ArrayRule, ArrayRuleCategory, Param } from "./type";
+import { ArrayRule, ArrayRuleCategory, Param } from "../utils/type";
 import {
   Button,
   Collapse,
@@ -7,9 +7,9 @@ import {
   Select,
 } from "@arco-design/web-react";
 import { ReactNode, useState } from "react";
-import { dateManager, editArray, formatDate } from "./utils";
-import Parser from "./parser";
-import NumberInput from "./components/number-input";
+import { dateManager, editArray, formatDate } from "../utils/utils";
+import Parser from "../parser";
+import NumberInput from "../components/number-input";
 
 const { Item: CollapseItem } = Collapse;
 

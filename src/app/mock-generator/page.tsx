@@ -4,7 +4,7 @@ import { Button, Input, Typography } from "@arco-design/web-react";
 import "@arco-design/web-react/dist/css/arco.css";
 
 import Parser from "./parser";
-import { generate, map } from "./utils";
+import { generate, map } from "./utils/utils";
 import React, { useState } from "react";
 
 const { TextArea } = Input;

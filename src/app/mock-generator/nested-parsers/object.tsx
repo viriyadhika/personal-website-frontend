@@ -1,7 +1,7 @@
 import { Collapse } from "@arco-design/web-react";
-import { Param } from "./type";
+import { Param } from "../utils/type";
 import { useState } from "react";
-import Parser from "./parser";
+import Parser from "../parser";
 // import Parser from './parser'
 const { Item: CollapseItem } = Collapse;
 
