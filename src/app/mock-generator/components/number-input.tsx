@@ -5,7 +5,7 @@ export default function NumberInput({
   onChange,
 }: Omit<InputProps, "value" | "onChange"> & {
   value: string;
-  onChange: (newValue: number) => void;
+  onChange: (newValue: string) => void;
 }) {
   return (
     <Input
@@ -14,7 +14,7 @@ export default function NumberInput({
         if (isNaN(Number(newValue))) {
           return;
         }
-        onChange(Number(newValue));
+        onChange(newValue);
       }}
     />
   );

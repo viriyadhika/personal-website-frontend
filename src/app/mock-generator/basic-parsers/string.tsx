@@ -139,14 +139,14 @@ function RandomWithOption({
 
 function Random({ onChange }: { onChange: (param: Param) => void }) {
   const [size, setSize] = useState("");
-  function handleChange(newVal: number) {
-    setSize(newVal.toString());
+  function handleChange(newVal: string) {
+    setSize(newVal);
     onChange({
       type: "string",
       value: "",
       config: {
         option: StringOption.RANDOM_CHARACTERS,
-        size: newVal,
+        size: Number(newVal),
       },
     });
   }

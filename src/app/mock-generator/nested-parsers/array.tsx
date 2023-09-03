@@ -28,12 +28,12 @@ export default function ArrayParser({
   const [arrayContent, setArrayContent] = useState(defaultArrayContent);
   const [rules, setRules] = useState<ArrayRule[]>([]);
 
-  function handeSizeChange(size: number) {
-    setSize(size.toString());
+  function handeSizeChange(size: string) {
+    setSize(size);
     onChange({
       type: "array",
       config: {
-        size,
+        size: Number(size),
         rules,
       },
       value: arrayContent,
@@ -304,12 +304,12 @@ function Restriction({
       <NumberInput
         value={total.toString()}
         onChange={(newValue) => {
-          setTotal(newValue.toString());
+          setTotal(newValue);
           onChange({
             category: ArrayRuleCategory.TOTAL,
             payload: {
               path: path,
-              total: newValue,
+              total: Number(newValue),
             },
           });
         }}
