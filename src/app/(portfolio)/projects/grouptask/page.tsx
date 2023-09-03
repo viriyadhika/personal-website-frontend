@@ -217,7 +217,7 @@ export default function Grouptask() {
           <h2>Using Group Management Website</h2>
           <hr />
           <object
-            data={process.env.PUBLIC_URL + "/grouptask-guide.pdf"}
+            data={`${PORTFOLIO_PUBLIC}/grouptask-guide.pdf`}
             type="application/pdf"
             width="90%"
             height="500rem"
