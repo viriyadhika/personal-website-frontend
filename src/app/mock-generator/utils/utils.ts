@@ -69,6 +69,9 @@ export function map(obj: any): Param {
   }
 
   if (Array.isArray(obj)) {
+    if (obj.length < 1) {
+      throw "Can't parse when there is no content in the array!";
+    }
     return {
       type: "array",
       value: map(obj[0]),

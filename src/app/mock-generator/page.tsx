@@ -1,12 +1,14 @@
 "use client";
 
-import { Button, Input, Typography } from "@arco-design/web-react";
+import { Button, Input, Radio, Typography } from "@arco-design/web-react";
+const RadioGroup = Radio.Group;
 import "@arco-design/web-react/dist/css/arco.css";
 
 import Parser from "./parser";
 import { generate, map } from "./utils/utils";
-import React, { useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import CopyButton from "./components/copy-button/copy-button";
+import { Param } from "./utils/type";
 
 const { TextArea } = Input;
 
@@ -37,8 +39,8 @@ function parseJSON(jsonString: string): { state: State; result: any } {
   }
 }
 
-function ParserWithResult({ initialObject }: { initialObject: any }) {
-  const configRef = useRef(map(initialObject));
+function ParserWithResult({ initialConfig }: { initialConfig: Param }) {
+  const configRef = useRef(initialConfig);
 
   return (
     <div>
@@ -55,7 +57,7 @@ function ParserWithResult({ initialObject }: { initialObject: any }) {
         formatter={(param) => JSON.stringify(generate(param))}
       />
       <Parser
-        param={map(initialObject)}
+        param={initialConfig}
         depth={0}
         onChange={(value) => {
           configRef.current = value;
@@ -65,8 +67,14 @@ function ParserWithResult({ initialObject }: { initialObject: any }) {
   );
 }
 
+enum Mode {
+  JSON = "JSON",
+  Config = "Config",
+}
+
 export default function Wrapper() {
   const [param, setParam] = useState("");
+  const [mode, setMode] = useState<Mode>(Mode.JSON);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const input = parseJSON(param);
@@ -88,6 +96,32 @@ export default function Wrapper() {
 
   return (
     <>
+      <RadioGroup defaultValue={Mode.JSON} style={{ marginBottom: 20 }}>
+        <Radio
+          value={Mode.JSON}
+          checked={mode === Mode.JSON}
+          onChange={(checked: boolean) => {
+            if (checked) {
+              setMode(Mode.JSON);
+              setIsGenerating(false);
+            }
+          }}
+        >
+          {Mode.JSON}
+        </Radio>
+        <Radio
+          value={Mode.Config}
+          checked={mode === Mode.Config}
+          onChange={(checked: boolean) => {
+            if (checked) {
+              setMode(Mode.Config);
+              setIsGenerating(false);
+            }
+          }}
+        >
+          {Mode.Config}
+        </Radio>
+      </RadioGroup>
       <TextArea
         value={param}
         onChange={setParam}
@@ -112,7 +146,11 @@ export default function Wrapper() {
       >
         Reset
       </Button>
-      {isGenerating && <ParserWithResult initialObject={input.result} />}
+      {isGenerating && (
+        <ParserWithResult
+          initialConfig={mode === Mode.JSON ? map(input.result) : input.result}
+        />
+      )}
     </>
   );
 }
