@@ -5,7 +5,8 @@ import "@arco-design/web-react/dist/css/arco.css";
 
 import Parser from "./parser";
 import { generate, map } from "./utils/utils";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import CopyButton from "./components/copy-button/copy-button";
 
 const { TextArea } = Input;
 
@@ -34,6 +35,34 @@ function parseJSON(jsonString: string): { state: State; result: any } {
       result: "",
     };
   }
+}
+
+function ParserWithResult({ initialObject }: { initialObject: any }) {
+  const configRef = useRef(map(initialObject));
+
+  return (
+    <div>
+      {/* Avoid rerendering copy button thus passing in the ref object */}
+      <CopyButton
+        configRef={configRef}
+        title="Copy config to clipboard"
+        formatter={JSON.stringify}
+      />
+      {/* Avoid rerendering copy button thus passing in the ref object */}
+      <CopyButton
+        configRef={configRef}
+        title="Copy result to clipboard"
+        formatter={(param) => JSON.stringify(generate(param))}
+      />
+      <Parser
+        param={map(initialObject)}
+        depth={0}
+        onChange={(value) => {
+          configRef.current = value;
+        }}
+      />
+    </div>
+  );
 }
 
 export default function Wrapper() {
@@ -83,15 +112,7 @@ export default function Wrapper() {
       >
         Reset
       </Button>
-      {isGenerating && (
-        <Parser
-          param={map(input.result)}
-          depth={0}
-          onChange={(value) => {
-            console.log(generate(value));
-          }}
-        />
-      )}
+      {isGenerating && <ParserWithResult initialObject={input.result} />}
     </>
   );
 }
