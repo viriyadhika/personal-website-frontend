@@ -1,4 +1,4 @@
-import { DatePicker, Input, Select, Typography } from "@arco-design/web-react";
+import { DatePicker, Input, Select } from "@arco-design/web-react";
 import { ReactNode, useState } from "react";
 import { NumberOption, Param } from "../utils/type";
 import dayjs from "dayjs";
@@ -57,7 +57,7 @@ export default function NumberParser({
 
   return (
     <>
-      <Typography.Text bold>Number</Typography.Text>
+      <strong>Number</strong>
       <Select
         placeholder="Please select"
         onChange={(value: NumberOption) => {

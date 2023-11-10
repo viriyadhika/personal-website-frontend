@@ -1,4 +1,4 @@
-import { Checkbox } from "@arco-design/web-react";
+import { Checkbox } from "@mui/material";
 import { Param } from "../utils/type";
 import { useState } from "react";
 
@@ -10,16 +10,15 @@ export default function BooleanParser({
   onChange: (param: Param) => void;
 }) {
   const [value, setValue] = useState(bool);
-  function handleChange(checked: boolean) {
-    setValue(checked);
-    onChange({ type: "boolean", value: checked, config: {} });
-  }
 
   return (
     <Checkbox
       placeholder="Insert boolean"
       value={value}
-      onChange={handleChange}
+      onChange={(e) => {
+        setValue(e.target.checked);
+        onChange({ type: "boolean", value: e.target.checked, config: {} });
+      }}
     />
   );
 }

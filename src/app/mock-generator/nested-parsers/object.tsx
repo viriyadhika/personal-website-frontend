@@ -1,9 +1,7 @@
-import { Collapse } from "@arco-design/web-react";
 import { Param } from "../utils/type";
 import { useState } from "react";
 import Parser from "../parser";
-// import Parser from './parser'
-const { Item: CollapseItem } = Collapse;
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 
 export default function ObjectParser({
   param,
@@ -18,29 +16,32 @@ export default function ObjectParser({
   const keys = Object.keys(param);
 
   return (
-    <Collapse defaultActiveKey={keys.map((key) => `${depth}${key}`)}>
+    <div>
       {keys.map((key) => {
         return (
-          <CollapseItem header={key} name={`${depth}${key}`} key={key}>
-            <Parser
-              param={param[key]}
-              depth={depth}
-              onChange={(newParam: Param) => {
-                const newResult: Param = {
-                  ...result,
-                  [key]: newParam,
-                };
-                setResult(newResult);
-                onChange({
-                  type: "object",
-                  value: newResult,
-                  config: {},
-                });
-              }}
-            />
-          </CollapseItem>
+          <Accordion key={key}>
+            <AccordionSummary>{key}</AccordionSummary>
+            <AccordionDetails>
+              <Parser
+                param={param[key]}
+                depth={depth}
+                onChange={(newParam: Param) => {
+                  const newResult: Param = {
+                    ...result,
+                    [key]: newParam,
+                  };
+                  setResult(newResult);
+                  onChange({
+                    type: "object",
+                    value: newResult,
+                    config: {},
+                  });
+                }}
+              />
+            </AccordionDetails>
+          </Accordion>
         );
       })}
-    </Collapse>
+    </div>
   );
 }

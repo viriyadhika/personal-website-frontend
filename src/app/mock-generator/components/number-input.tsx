@@ -1,4 +1,4 @@
-import { Input, InputProps } from "@arco-design/web-react";
+import { Input, InputProps } from "@mui/material";
 
 export default function NumberInput({
   value,
@@ -10,7 +10,8 @@ export default function NumberInput({
   return (
     <Input
       value={value}
-      onChange={(newValue: string) => {
+      onChange={(e) => {
+        const newValue = e.target.value;
         if (isNaN(Number(newValue))) {
           return;
         }

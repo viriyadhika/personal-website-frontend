@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Param, StringOption } from "../utils/type";
 import { editArray } from "../utils/utils";
-import { Button, Input, Select, Typography } from "@arco-design/web-react";
+import { Button, Input, Select } from "@arco-design/web-react";
 import NumberInput from "../components/number-input";
 const options = [
   StringOption.HARDCODED,
@@ -67,7 +67,7 @@ export default function StringParser({
 
   return (
     <>
-      <Typography.Text bold>String</Typography.Text>
+      <strong>String</strong>
       <Select
         placeholder="Please select"
         onChange={(value: StringOption) => {
