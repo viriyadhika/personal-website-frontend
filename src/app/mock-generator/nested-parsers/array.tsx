@@ -8,11 +8,12 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
 import { ReactNode, useState } from "react";
 import { dateManager, editArray } from "../utils/utils";
 import Parser from "../parser";
 import NumberInput from "../components/number-input";
+import { DatePicker } from "../components/date-picker";
+
 export default function ArrayParser({
   defaultArrayContent,
   defaultSize,

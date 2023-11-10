@@ -4,8 +4,6 @@ import { Button, TextareaAutosize, RadioGroup, Radio } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import "@arco-design/web-react/dist/css/arco.css";
-
 import Parser from "./parser";
 import { generate, map } from "./utils/utils";
 import React, { useRef, useState } from "react";

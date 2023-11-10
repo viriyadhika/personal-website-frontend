@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "analyze-build": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@arco-design/web-react": "^2.51.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.17",
@@ -26,5 +26,9 @@
     "react-bootstrap": "^2.8.0",
     "react-dom": "18.2.0",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^14.0.2",
+    "cross-env": "^7.0.3"
   }
 }

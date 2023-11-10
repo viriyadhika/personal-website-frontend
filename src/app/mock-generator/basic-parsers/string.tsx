@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Param, StringOption } from "../utils/type";
 import { editArray } from "../utils/utils";
-import { Button, Input, Select } from "@arco-design/web-react";
+import { Button, Input, MenuItem, Select } from "@mui/material";
 import NumberInput from "../components/number-input";
 const options = [
   StringOption.HARDCODED,
@@ -19,7 +19,7 @@ export default function StringParser({
   defaultOption: StringOption;
   onChange: (param: Param) => void;
 }) {
-  const [option, setOption] = useState(defaultOption);
+  const [selected, setOption] = useState(defaultOption);
 
   const optionsMapping: Record<StringOption, ReactNode> = {
     [StringOption.HARDCODED]: (
@@ -70,14 +70,22 @@ export default function StringParser({
       <strong>String</strong>
       <Select
         placeholder="Please select"
-        onChange={(value: StringOption) => {
-          onChange(defaultValueMap[value]);
-          setOption(value);
+        onChange={(e) => {
+          const newValue = e.target.value as StringOption;
+          onChange(defaultValueMap[newValue]);
+          setOption(newValue);
         }}
-        options={options}
-        value={option}
-      />
-      {optionsMapping[option]}
+        value={selected}
+      >
+        {options.map((option) => {
+          return (
+            <MenuItem value={option} key={option}>
+              {option}
+            </MenuItem>
+          );
+        })}
+      </Select>
+      {optionsMapping[selected]}
     </>
   );
 }
@@ -110,8 +118,8 @@ function RandomWithOption({
           <Input
             key={idx}
             value={option}
-            onChange={(newOption) => {
-              const newOptions = editArray(options, newOption, idx);
+            onChange={(e) => {
+              const newOptions = editArray(options, e.target.value, idx);
               setNewOptions(newOptions);
             }}
           />
@@ -168,17 +176,22 @@ function HardCoded({
   onChange: (param: Param) => void;
 }) {
   const [value, setValue] = useState(defaultValue);
-  function handleChange(newVal: string) {
-    setValue(newVal);
-    onChange({
-      type: "string",
-      value: newVal,
-      config: {
-        option: StringOption.HARDCODED,
-      },
-    });
-  }
+  function handleChange(newVal: string) {}
   return (
-    <Input placeholder="Insert string" value={value} onChange={handleChange} />
+    <Input
+      placeholder="Insert string"
+      value={value}
+      onChange={(e) => {
+        const newVal = e.target.value;
+        setValue(newVal);
+        onChange({
+          type: "string",
+          value: newVal,
+          config: {
+            option: StringOption.HARDCODED,
+          },
+        });
+      }}
+    />
   );
 }

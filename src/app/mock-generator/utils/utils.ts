@@ -19,10 +19,6 @@ export const dateManager = (function () {
   return dayjs;
 })();
 
-export function formatDate(timestamp: number) {
-  return dateManager.unix(timestamp).format("YYYY-MM-DD");
-}
-
 export function generateRandomNumber(start: number, end: number) {
   return Math.floor(Math.random() * (end - start + 1) + start);
 }
