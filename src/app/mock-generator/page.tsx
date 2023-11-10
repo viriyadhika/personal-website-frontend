@@ -1,16 +1,17 @@
 "use client";
 
-import { Button, Input, Radio, Typography } from "@arco-design/web-react";
-const RadioGroup = Radio.Group;
+import { Button, TextareaAutosize, RadioGroup, Radio } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
 import "@arco-design/web-react/dist/css/arco.css";
 
 import Parser from "./parser";
 import { generate, map } from "./utils/utils";
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import CopyButton from "./components/copy-button/copy-button";
 import { Param } from "./utils/type";
-
-const { TextArea } = Input;
+import { Typography } from "@mui/material";
 
 enum State {
   INITIAL,
@@ -79,59 +80,58 @@ export default function Wrapper() {
 
   const input = parseJSON(param);
   const mapping: Record<State, React.ReactNode> = {
-    [State.ERROR]: (
-      <Typography.Text type="warning">Enter a valid JSON</Typography.Text>
-    ),
+    [State.ERROR]: <Typography>Enter a valid JSON</Typography>,
     [State.INITIAL]: (
-      <Typography.Text>
-        Enter some JSON to start generating mock
-      </Typography.Text>
+      <Typography>Enter some JSON to start generating mock</Typography>
     ),
     [State.SUCCESS]: (
-      <Typography.Text type="success">
+      <Typography color="success.main">
         Parsing successful, click on Generate and see console
-      </Typography.Text>
+      </Typography>
     ),
   };
 
   return (
-    <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <RadioGroup defaultValue={Mode.JSON} style={{ marginBottom: 20 }}>
-        <Radio
-          value={Mode.JSON}
-          checked={mode === Mode.JSON}
-          onChange={(checked: boolean) => {
-            if (checked) {
-              setMode(Mode.JSON);
-              setIsGenerating(false);
-            }
-          }}
-        >
-          {Mode.JSON}
-        </Radio>
-        <Radio
-          value={Mode.Config}
-          checked={mode === Mode.Config}
-          onChange={(checked: boolean) => {
-            if (checked) {
-              setMode(Mode.Config);
-              setIsGenerating(false);
-            }
-          }}
-        >
-          {Mode.Config}
-        </Radio>
+        <div>
+          <Radio
+            value={Mode.JSON}
+            checked={mode === Mode.JSON}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setMode(Mode.JSON);
+                setIsGenerating(false);
+              }
+            }}
+          />
+          <span>{Mode.JSON}</span>
+        </div>
+        <div>
+          <Radio
+            value={Mode.Config}
+            checked={mode === Mode.Config}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setMode(Mode.Config);
+                setIsGenerating(false);
+              }
+            }}
+          />
+          <span>{Mode.Config}</span>
+        </div>
       </RadioGroup>
-      <TextArea
+      <TextareaAutosize
         value={param}
-        onChange={setParam}
+        onChange={(e) => setParam(e.target.value)}
         placeholder="Enter JSON"
-        autoSize={{ minRows: 5 }}
+        minRows={5}
+        maxRows={10}
         disabled={isGenerating}
       />
       <div>{mapping[input.state]}</div>
       <Button
-        type="primary"
+        color="success"
         onClick={() => {
           setIsGenerating(true);
         }}
@@ -139,7 +139,7 @@ export default function Wrapper() {
         Generate!
       </Button>
       <Button
-        type="secondary"
+        color="info"
         onClick={() => {
           setIsGenerating(false);
         }}
@@ -151,6 +151,6 @@ export default function Wrapper() {
           initialConfig={mode === Mode.JSON ? map(input.result) : input.result}
         />
       )}
-    </>
+    </LocalizationProvider>
   );
 }

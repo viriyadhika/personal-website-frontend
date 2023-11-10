@@ -1,18 +1,18 @@
 import { ArrayRule, ArrayRuleCategory, Param } from "../utils/type";
 import {
   Button,
-  Collapse,
-  DatePicker,
+  Accordion,
   Input,
+  MenuItem,
   Select,
-} from "@arco-design/web-react";
+  AccordionDetails,
+  AccordionSummary,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import { ReactNode, useState } from "react";
-import { dateManager, editArray, formatDate } from "../utils/utils";
+import { dateManager, editArray } from "../utils/utils";
 import Parser from "../parser";
 import NumberInput from "../components/number-input";
-
-const { Item: CollapseItem } = Collapse;
-
 export default function ArrayParser({
   defaultArrayContent,
   defaultSize,
@@ -41,8 +41,9 @@ export default function ArrayParser({
   }
 
   return (
-    <Collapse defaultActiveKey={"Array"}>
-      <CollapseItem name={"Array"} header={"Array"}>
+    <Accordion>
+      <AccordionSummary>Array</AccordionSummary>
+      <AccordionDetails>
         <NumberInput
           placeholder="size"
           value={String(size)}
@@ -78,8 +79,8 @@ export default function ArrayParser({
             });
           }}
         />
-      </CollapseItem>
-    </Collapse>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 
@@ -160,16 +161,21 @@ function Rule({
   return (
     <>
       <Select
-        options={options}
-        onChange={(selection: ArrayRuleCategory) => {
+        onChange={(e) => {
           onChange({
             ...rule,
-            category: selection,
+            category: e.target.value as ArrayRuleCategory,
             payload: {},
           });
         }}
         value={rule.category}
-      />
+      >
+        {options.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
       {optionsToComponentMap[rule.category]}
     </>
   );
@@ -199,26 +205,32 @@ function TimeSeries({
   return (
     <>
       <Select
-        options={generateNumberFields(arrayContent, [])}
-        onChange={(newPath: string) => {
-          setPath(newPath);
+        onChange={(e) => {
+          setPath(e.target.value);
           onChange({
             ...rule,
             category: ArrayRuleCategory.TIME_SERIES,
             payload: {
-              path: newPath,
+              path: e.target.value,
               startTimestamp: startTimestamp,
               period: dateManager
                 .duration({ [periodValue.unit]: periodValue.value })
-                .asMilliseconds(),
+                .asSeconds(),
             },
           });
         }}
-      />
+        value={path}
+      >
+        {generateNumberFields(arrayContent, []).map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
       <DatePicker
-        value={formatDate(startTimestamp)}
-        onChange={(newValue: string) => {
-          const newStartTimestamp = dateManager(newValue).unix();
+        value={dateManager.unix(startTimestamp)}
+        onChange={(newValue) => {
+          const newStartTimestamp = newValue!.unix();
           setStartTimestamp(newStartTimestamp);
           onChange({
             ...rule,
@@ -228,14 +240,15 @@ function TimeSeries({
               startTimestamp: newStartTimestamp,
               period: dateManager
                 .duration({ [periodValue.unit]: periodValue.value })
-                .asMilliseconds(),
+                .asSeconds(),
             },
           });
         }}
       />
       <Input
         value={periodValue.value.toString()}
-        onChange={(newValue: string) => {
+        onChange={(e) => {
+          const newValue = e.target.value;
           if (isNaN(Number(newValue))) {
             return;
           }
@@ -248,15 +261,15 @@ function TimeSeries({
               startTimestamp,
               period: dateManager
                 .duration({ [periodValue.unit]: Number(newValue) })
-                .asMilliseconds(),
+                .asSeconds(),
             },
           });
         }}
       />
       <Select
-        options={["days", "hours"]}
         value={periodValue.unit}
-        onChange={(newValue: "days" | "hours") => {
+        onChange={(e) => {
+          const newValue = e.target.value as "days" | "hours";
           setPeriodValue((cur) => ({ ...cur, unit: newValue }));
           onChange({
             ...rule,
@@ -266,11 +279,17 @@ function TimeSeries({
               startTimestamp,
               period: dateManager
                 .duration({ [newValue]: periodValue.value })
-                .asMilliseconds(),
+                .asSeconds(),
             },
           });
         }}
-      />
+      >
+        {["days", "hours"].map((item) => (
+          <MenuItem key={item} value={item}>
+            {item}
+          </MenuItem>
+        ))}
+      </Select>
     </>
   );
 }
@@ -289,8 +308,8 @@ function Restriction({
   return (
     <>
       <Select
-        options={generateNumberFields(arrayContent, [])}
-        onChange={(newPath: string) => {
+        onChange={(e) => {
+          const newPath = e.target.value;
           setPath(newPath);
           onChange({
             category: ArrayRuleCategory.TOTAL,
@@ -300,7 +319,14 @@ function Restriction({
             },
           });
         }}
-      />
+        value={path}
+      >
+        {generateNumberFields(arrayContent, []).map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
       <NumberInput
         value={total.toString()}
         onChange={(newValue) => {
