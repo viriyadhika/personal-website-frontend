@@ -80,6 +80,7 @@ function Hello() {
   );
 }
 
+const PROJECT_SUFFIX = "/old-portfolio/projects";
 function Projects() {
   return (
     <Container className="projects" fluid>
@@ -101,7 +102,7 @@ function Projects() {
                     title="Habit Tracker"
                     pic={"/habit_tracker-logo.png"}
                     subtitle="Java, Android Studio"
-                    link="/projects/habit-tracker"
+                    link={`${PROJECT_SUFFIX}/habit-tracker`}
                   />
                 </div>
                 <div style={{ maxWidth: "25rem" }}>
@@ -109,7 +110,7 @@ function Projects() {
                     title="Logistics Website"
                     pic={"/logistics-logo.png"}
                     subtitle="Django, Python, Bootstrap"
-                    link="/projects/logistics"
+                    link={`${PROJECT_SUFFIX}/logistics`}
                   />
                 </div>
                 <div style={{ maxWidth: "25rem" }}>
@@ -117,7 +118,7 @@ function Projects() {
                     title="Group Management"
                     pic={"/grouptask-logo.png"}
                     subtitle="Django REST, Android, React JS"
-                    link="/projects/grouptask"
+                    link={`${PROJECT_SUFFIX}/grouptask`}
                   />
                 </div>
               </div>

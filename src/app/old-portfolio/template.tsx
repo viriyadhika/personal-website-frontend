@@ -2,14 +2,14 @@
 import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import "./App.css";
+import "./global.css";
 import { PORTFOLIO_PUBLIC } from "./constants";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar bg="transparent" expand="lg">
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/old-portfolio">
           <Image
             fluid
             width="40rem"

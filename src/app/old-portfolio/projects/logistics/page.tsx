@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-import { PORTFOLIO_PUBLIC } from "../../constants";
+import { PORTFOLIO_PUBLIC } from "../../../old-portfolio/constants";
 
 export default function Logistics() {
   return (
