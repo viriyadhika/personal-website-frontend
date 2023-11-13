@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-import { PORTFOLIO_PUBLIC } from "../../../old-portfolio/constants";
+import { PERSONAL_PROJECT_PUBLIC } from "@/configs/route";
 
 export default function HabitTracker() {
   return (
@@ -44,28 +44,28 @@ export default function HabitTracker() {
                 <Image
                   fluid
                   alt="Habit Tracker Logo"
-                  src={`${PORTFOLIO_PUBLIC}/habit_tracker-logo.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/habit_tracker-logo.png`}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <Image
                   fluid
                   alt="Habit Tracker Add Habit"
-                  src={`${PORTFOLIO_PUBLIC}/habit_tracker-add_habit.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/habit_tracker-add_habit.png`}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <Image
                   fluid
                   alt="Habit Tracker Add Record"
-                  src={`${PORTFOLIO_PUBLIC}/habit_tracker-add_record.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/habit_tracker-add_record.png`}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <Image
                   fluid
                   alt="Habit Tracker View Statistics"
-                  src={`${PORTFOLIO_PUBLIC}/habit_tracker-view_statistics.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/habit_tracker-view_statistics.png`}
                 />
               </Carousel.Item>
             </Carousel>

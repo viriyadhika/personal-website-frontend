@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-import { PORTFOLIO_PUBLIC } from "../../../old-portfolio/constants";
+import { PERSONAL_PROJECT_PUBLIC } from "@/configs/route";
 
 export default function Grouptask() {
   return (
@@ -40,14 +40,14 @@ export default function Grouptask() {
                 <Image
                   fluid
                   alt="Grouptask logo"
-                  src={`${PORTFOLIO_PUBLIC}/grouptask-logo.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/grouptask-logo.png`}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <Image
                   fluid
                   alt="Grouptask carousel 1"
-                  src={`${PORTFOLIO_PUBLIC}/grouptask-ss.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/grouptask-ss.png`}
                 />
               </Carousel.Item>
             </Carousel>
@@ -217,7 +217,7 @@ export default function Grouptask() {
           <h2>Using Group Management Website</h2>
           <hr />
           <object
-            data={`${PORTFOLIO_PUBLIC}/grouptask-guide.pdf`}
+            data={`${PERSONAL_PROJECT_PUBLIC}/grouptask-guide.pdf`}
             type="application/pdf"
             width="90%"
             height="500rem"

@@ -6,7 +6,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { Image } from "react-bootstrap";
-import { PORTFOLIO_PUBLIC } from "./constants";
+import {
+  PERSONAL_PROJECT_PUBLIC,
+  PORTFOLIO_PUBLIC,
+  SKILLS_PUBLIC,
+} from "@/configs/route";
 
 export default function Home() {
   return (
@@ -141,7 +145,7 @@ function ProjectCard(props: {
       <Card className="project-card">
         {/* <Image fluid className="project-card-img" src={props.pic} /> */}
         <Image
-          src={`${PORTFOLIO_PUBLIC}${props.pic}`}
+          src={`${PERSONAL_PROJECT_PUBLIC}${props.pic}`}
           className="project-card-img"
           alt={`Project card ${props.title}`}
           fluid
@@ -172,26 +176,26 @@ function ProjectCard(props: {
 
 function SkillSets() {
   let front_end = [
-    ["Android Studio", "/skill-android_studio.png"],
-    ["ReactJS", "/skill-react.png"],
-    ["Bootstrap", "/skill-bootstrap.png"],
+    ["Android Studio", "/android_studio.png"],
+    ["ReactJS", "/react.png"],
+    ["Bootstrap", "/bootstrap.png"],
   ];
 
   let back_end = [
-    ["Django", "/skill-django.png"],
-    ["Django REST Framework", "/skill-drf.png"],
+    ["Django", "/django.png"],
+    ["Django REST Framework", "/drf.png"],
   ];
 
   let devops = [
-    ["Docker", "/skill-docker.png"],
-    ["NGINX", "/skill-nginx.png"],
+    ["Docker", "/docker.png"],
+    ["NGINX", "/nginx.png"],
   ];
 
   let languages = [
-    ["Python", "/skill-python.jpeg"],
-    ["Java", "/skill-java.png"],
-    ["Javascript", "/skill-javascript.png"],
-    ["HTML", "/skill-html.png"],
+    ["Python", "/python.png"],
+    ["Java", "/java.png"],
+    ["Javascript", "/javascript.png"],
+    ["HTML", "/html.png"],
   ];
 
   return (
@@ -215,7 +219,7 @@ function SkillSets() {
               <Row className="justify-content-center">
                 <Image
                   fluid
-                  src={`${PORTFOLIO_PUBLIC}${lang[1]}`}
+                  src={`${SKILLS_PUBLIC}${lang[1]}`}
                   style={{ maxHeight: "5rem" }}
                 />
               </Row>
@@ -236,7 +240,7 @@ function SkillSets() {
               <Row className="justify-content-center">
                 <Image
                   fluid
-                  src={`${PORTFOLIO_PUBLIC}${be[1]}`}
+                  src={`${SKILLS_PUBLIC}${be[1]}`}
                   style={{ maxHeight: "5rem" }}
                 />
               </Row>
@@ -257,7 +261,7 @@ function SkillSets() {
               <Row className="justify-content-center">
                 <Image
                   fluid
-                  src={`${PORTFOLIO_PUBLIC}${fe[1]}`}
+                  src={`${SKILLS_PUBLIC}${fe[1]}`}
                   style={{ maxHeight: "5rem" }}
                 />
               </Row>
@@ -278,7 +282,7 @@ function SkillSets() {
               <Row className="justify-content-center">
                 <Image
                   fluid
-                  src={`${PORTFOLIO_PUBLIC}${dev[1]}`}
+                  src={`${SKILLS_PUBLIC}${dev[1]}`}
                   style={{ maxHeight: "5rem" }}
                 />
               </Row>

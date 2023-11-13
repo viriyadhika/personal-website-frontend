@@ -3,7 +3,7 @@ import Image from "react-bootstrap/Image";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import "./global.css";
-import { PORTFOLIO_PUBLIC } from "./constants";
+import { PORTFOLIO_PUBLIC } from "@/configs/route";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
   return (

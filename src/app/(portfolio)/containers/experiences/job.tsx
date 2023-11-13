@@ -18,6 +18,7 @@ import {
   DateRange,
   KeyboardArrowDown,
 } from "@mui/icons-material";
+import { JOB_PUBLIC } from "@/configs/route";
 
 export type JobProps = {
   company: string;
@@ -40,7 +41,7 @@ export default function Job({
       <CardHeader
         avatar={
           <ImageBorder size={100}>
-            <ImageWrap size={80} name={image} rounded />
+            <ImageWrap size={80} src={`${JOB_PUBLIC}/${image}`} rounded />
           </ImageBorder>
         }
         title={<Typography variant={"h5"}>{company}</Typography>}

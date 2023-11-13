@@ -2,6 +2,7 @@ import { Box, Stack, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";
+import { SKILLS_PUBLIC } from "@/configs/route";
 
 export type Category = {
   name: string;
@@ -13,22 +14,22 @@ const categories: Category[] = [
   {
     name: "language",
     label: "Programming language",
-    images: ["skill-javascript", "skill-python", "skill-java"],
+    images: ["javascript", "python", "java"],
   },
   {
     name: "frontend",
     label: "Front-end",
-    images: ["skill-android_studio", "skill-react", "skill-bootstrap"],
+    images: ["android_studio", "react", "bootstrap"],
   },
   {
     name: "backend",
     label: "Back-end",
-    images: ["skill-django", "skill-drf"],
+    images: ["django", "drf"],
   },
   {
     name: "devops",
     label: "Dev Ops",
-    images: ["skill-nginx", "skill-docker"],
+    images: ["nginx", "docker"],
   },
 ];
 
@@ -52,7 +53,7 @@ function TabPanel({
         <Stack p={2} direction={"row"} spacing={2}>
           {category.images.map((image) => (
             <ImageBorder key={image} size={80}>
-              <ImageWrap name={image} size={55} />
+              <ImageWrap src={`${SKILLS_PUBLIC}/${image}`} size={55} />
             </ImageBorder>
           ))}
         </Stack>

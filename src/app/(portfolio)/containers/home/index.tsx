@@ -2,7 +2,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";
 import { ReactNode } from "react";
-import { PORTFOLIO_PUBLIC } from "../../constants";
+import { PORTFOLIO_PUBLIC, SOCIAL_PUBLIC } from "@/configs/route";
 
 const Emphasize = ({ children }: { children: ReactNode }) => {
   return (
@@ -32,7 +32,7 @@ export default function Home() {
         gap={2}
       >
         <Stack direction={"row"} alignItems={"center"} boxSizing={"border-box"}>
-          <ImageWrap size={215} rounded name={"self-pic"} />
+          <ImageWrap size={215} rounded src={`${PORTFOLIO_PUBLIC}/self-pic`} />
           <Stack padding={4} spacing={4}>
             <Stack>
               <Typography variant={"h1"} color={"grey.400"}>
@@ -49,7 +49,7 @@ export default function Home() {
             <Stack direction="row" spacing={2}>
               {["linkedin", "github", "gmail"].map((name) => (
                 <ImageBorder key={name} size={50}>
-                  <ImageWrap size={30} name={name} />
+                  <ImageWrap size={30} src={`${SOCIAL_PUBLIC}/${name}`} />
                 </ImageBorder>
               ))}
             </Stack>

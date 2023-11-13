@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
-import { PORTFOLIO_PUBLIC } from "../../../old-portfolio/constants";
+import { PERSONAL_PROJECT_PUBLIC } from "@/configs/route";
 
 export default function Logistics() {
   return (
@@ -32,21 +32,21 @@ export default function Logistics() {
                 <Image
                   fluid
                   alt="Logistics logo"
-                  src={`${PORTFOLIO_PUBLIC}/logistics-logo.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/logistics-logo.png`}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <Image
                   fluid
                   alt="Logistics carousel 1"
-                  src={`${PORTFOLIO_PUBLIC}/logistics-carousel_1.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/logistics-carousel_1.png`}
                 />
               </Carousel.Item>
               <Carousel.Item>
                 <Image
                   fluid
                   alt="Logistics carousel 2"
-                  src={`${PORTFOLIO_PUBLIC}/logistics-carousel_2.png`}
+                  src={`${PERSONAL_PROJECT_PUBLIC}/logistics-carousel_2.png`}
                 />
               </Carousel.Item>
             </Carousel>
@@ -114,7 +114,7 @@ export default function Logistics() {
           <h2>Using Logistics Website</h2>
           <hr />
           <object
-            data={`${PORTFOLIO_PUBLIC}/logistics-manual.pdf`}
+            data={`${PERSONAL_PROJECT_PUBLIC}/logistics-manual.pdf`}
             type="application/pdf"
             width="90%"
             height="500rem"

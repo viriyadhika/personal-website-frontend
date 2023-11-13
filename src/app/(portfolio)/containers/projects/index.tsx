@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";
+import { PERSONAL_PROJECT_PUBLIC } from "@/configs/route";
 
 const projects = [
   {
@@ -66,7 +67,11 @@ export default function Projects() {
           {projects.map((project) => (
             <Stack direction="row" spacing={1} key={project.name}>
               <ImageBorder size={140}>
-                <ImageWrap size={120} rounded name={project.image} />
+                <ImageWrap
+                  size={120}
+                  rounded
+                  src={`${PERSONAL_PROJECT_PUBLIC}/${project.image}`}
+                />
               </ImageBorder>
               <Stack justifyContent={"center"} spacing={1} flex={1}>
                 <Typography variant={"h5"}>{project.name}</Typography>

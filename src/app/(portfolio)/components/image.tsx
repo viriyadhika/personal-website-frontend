@@ -1,23 +1,24 @@
 import BaseImage from "next/image";
-import { PORTFOLIO_PUBLIC } from "../constants";
 
 export type ImageProps = {
   rounded?: boolean;
-  name: string;
+  src: string;
   size: number;
 };
 
-export default function ImageWrap({ rounded = false, name, size }: ImageProps) {
+export default function ImageWrap({ rounded = false, src, size }: ImageProps) {
+  const tokens = src.split("/");
+  const alt = tokens[tokens.length - 1];
   return (
     <BaseImage
-      src={`${PORTFOLIO_PUBLIC}/${name}.png`}
+      src={`${src}.png`}
       width={size}
       height={size}
       style={{
         borderRadius: rounded ? "50%" : 0,
         objectFit: "contain",
       }}
-      alt={name}
+      alt={alt}
     />
   );
 }
