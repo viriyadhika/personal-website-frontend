@@ -21,6 +21,7 @@ export default function Home() {
       alignItems={"center"}
       justifyContent={"center"}
       padding={2}
+      boxSizing={"border-box"}
       sx={{
         background: `linear-gradient(90deg, rgba(5, 9, 18, 1) 0%, rgba(6, 6, 12, 0.2) 98%) 100% no-repeat, url(${PORTFOLIO_PUBLIC}/background.jpg) 0 0/cover no-repeat !important`,
       }}
@@ -31,15 +32,22 @@ export default function Home() {
         justifyContent={"center"}
         gap={2}
       >
-        <Stack direction={"row"} alignItems={"center"} boxSizing={"border-box"}>
+        <Stack
+          direction={"row"}
+          alignItems={"center"}
+          boxSizing={"border-box"}
+          useFlexGap
+          flexWrap={"wrap"}
+          gap={4}
+        >
           <ImageWrap size={215} rounded src={`${PORTFOLIO_PUBLIC}/self-pic`} />
-          <Stack padding={4} spacing={4}>
+          <Stack spacing={4}>
             <Stack>
               <Typography variant={"h1"} color={"grey.400"}>
                 Hello,
                 <br /> I&apos;m <Emphasize>Viriyadhika</Emphasize>
               </Typography>
-              <Typography variant={"h5"} color={"grey.400"}>
+              <Typography variant={"subheading"} color={"grey.400"}>
                 I&apos;m a <Emphasize>Software Engineer</Emphasize> currently
                 based in Singapore.
                 <br />I enjoy building cool{" "}
@@ -58,9 +66,9 @@ export default function Home() {
         <Button
           variant="outlined"
           color={"primary"}
-          sx={{ typography: "h5", px: 3, py: 1 }}
+          sx={{ typography: "subheading", px: 3, py: 1 }}
         >
-          See my experiences
+          Download my resume
         </Button>
       </Stack>
     </Box>

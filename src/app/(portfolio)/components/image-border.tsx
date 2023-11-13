@@ -15,7 +15,7 @@ export default function ImageBorder({
         width: size,
         minWidth: size,
         minHeight: size,
-        borderRadius: "50%",
+        borderRadius: 3,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

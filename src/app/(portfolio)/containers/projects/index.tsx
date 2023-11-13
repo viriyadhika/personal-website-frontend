@@ -42,12 +42,13 @@ export default function Projects() {
         direction="row"
         alignItems={"center"}
         flexWrap={"wrap"}
+        useFlexGap
         spacing={4}
       >
-        <Card sx={{ flex: 1, minWidth: 200, maxWidth: 500 }}>
+        <Card sx={{ flex: 1, minWidth: 250, maxWidth: 500 }}>
           <CardHeader
             title={
-              <Typography variant="h4">
+              <Typography variant="h5">
                 My Projects and Learning Journey
               </Typography>
             }
@@ -65,7 +66,7 @@ export default function Projects() {
         </Card>
         <Stack spacing={2}>
           {projects.map((project) => (
-            <Stack direction="row" spacing={1} key={project.name}>
+            <Stack direction="row" spacing={2} key={project.name}>
               <ImageBorder size={140}>
                 <ImageWrap
                   size={120}

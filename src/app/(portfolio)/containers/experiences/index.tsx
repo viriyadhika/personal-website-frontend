@@ -13,6 +13,28 @@ const jobs: JobProps[] = [
       `Use TikTok internal toolings such as build tools and infrastructure as well as different frontend development and Micro-Frontends frameworks to perform scalable deployment to multiple regions and countries`,
       `Create a smooth native app experience by using animation library such as Framer motion`,
     ],
+    skills: [
+      {
+        skillSrc: "javascript",
+        name: "Javascript",
+      },
+      {
+        skillSrc: "react",
+        name: "React",
+      },
+      {
+        skillSrc: "redux",
+        name: "Redux",
+      },
+      {
+        skillSrc: "cdn",
+        name: "CDN",
+      },
+      {
+        skillSrc: "cloud",
+        name: "CI/CD",
+      },
+    ],
   },
   {
     company: "DBS Bank",
@@ -27,6 +49,48 @@ const jobs: JobProps[] = [
       `From times to times, performing tech lead duties such as code review, distribute workload to team members, act as technical representative in software design meetings and production support.`,
       `Serve as a mentor to new software developers in the team.`,
     ],
+    skills: [
+      {
+        skillSrc: "java",
+        name: "Java",
+      },
+      {
+        skillSrc: "springboot",
+        name: "Spring boot",
+      },
+      {
+        skillSrc: "mockito",
+        name: "Mockito",
+      },
+      {
+        skillSrc: "kibana",
+        name: "Kibana",
+      },
+      {
+        skillSrc: "mariadb",
+        name: "Maria DB",
+      },
+      {
+        skillSrc: "javascript",
+        name: "Javascript",
+      },
+      {
+        skillSrc: "react",
+        name: "React",
+      },
+      {
+        skillSrc: "redux",
+        name: "Redux",
+      },
+      {
+        skillSrc: "jest",
+        name: "Jest",
+      },
+      {
+        skillSrc: "react-hook-form",
+        name: "React hook form",
+      },
+    ],
   },
   {
     company: "Micron Technology",
@@ -37,12 +101,29 @@ const jobs: JobProps[] = [
       `Led and supervised 9 team members to maximize production line performance and efficiency in order to meet daily wafer production target`,
       `Use SQL and Tableau to build an interactive dashboard which automate daily production line performance reporting`,
     ],
+    skills: [
+      {
+        skillSrc: "microsoft-sql",
+        name: "Microsoft SQL",
+      },
+      {
+        skillSrc: "tableau",
+        name: "Tableau",
+      },
+    ],
   },
 ];
 
 export default function Experiences() {
   return (
-    <Stack p={2} direction={"row"} spacing={2} useFlexGap flexWrap={"wrap"}>
+    <Stack
+      p={2}
+      direction={"row"}
+      spacing={2}
+      justifyContent={"center"}
+      useFlexGap
+      flexWrap={"wrap"}
+    >
       {jobs.map((job) => (
         <Job key={job.company} {...job} />
       ))}

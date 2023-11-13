@@ -71,6 +71,9 @@ export default function Content() {
         onChange={(_e, idx) => {
           setActive(idx);
         }}
+        variant="scrollable"
+        allowScrollButtonsMobile
+        scrollButtons={"auto"}
       >
         {categories.map((category) => (
           <Tab

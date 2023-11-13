@@ -1,28 +1,50 @@
-import { createTheme } from "@mui/material";
+import { createTheme, responsiveFontSizes } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
-    custom: React.CSSProperties;
+    subheading: React.CSSProperties;
   }
 
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    custom?: React.CSSProperties;
+    subheading?: React.CSSProperties;
   }
 }
 
 // Update the Typography's variant prop options
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
-    custom: true;
+    subheading: true;
   }
 }
 
+const defaultTheme = createTheme();
+
 const theme = createTheme({
   typography: {
-    // In case need in the future
-    custom: {},
+    h1: {
+      ...defaultTheme.typography.h1,
+      [defaultTheme.breakpoints.down("sm")]: {
+        fontSize: "2rem",
+      },
+    },
+    subheading: {
+      fontSize: "1.4rem",
+      ...defaultTheme.typography.h5,
+      [defaultTheme.breakpoints.down("sm")]: {
+        fontSize: "1rem",
+      },
+    },
+    h4: {
+      fontSize: "1.8rem",
+    },
+    h5: {
+      fontSize: "1.4rem",
+    },
+    h6: {
+      fontSize: "1.2rem",
+    },
   },
 });
 
-export default theme;
+export default responsiveFontSizes(theme);

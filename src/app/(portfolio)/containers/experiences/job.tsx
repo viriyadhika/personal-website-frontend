@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Chip,
   Collapse,
   ListItemText,
   Stack,
@@ -19,6 +20,7 @@ import {
   KeyboardArrowDown,
 } from "@mui/icons-material";
 import { JOB_PUBLIC } from "@/configs/route";
+import SkillTag, { SkillTagProps } from "./skill-tag";
 
 export type JobProps = {
   company: string;
@@ -26,6 +28,7 @@ export type JobProps = {
   date: string;
   image: string;
   descriptions: string[];
+  skills: SkillTagProps[];
 };
 
 export default function Job({
@@ -34,10 +37,11 @@ export default function Job({
   descriptions,
   image,
   date,
+  skills,
 }: JobProps) {
   const [expand, setExpand] = useState(false);
   return (
-    <Card sx={{ maxWidth: "min(45%, 400px)", minWidth: 350 }}>
+    <Card sx={{ maxWidth: "min(40%, 400px)", minWidth: 300 }}>
       <CardHeader
         avatar={
           <ImageBorder size={100}>
@@ -46,17 +50,28 @@ export default function Job({
         }
         title={<Typography variant={"h5"}>{company}</Typography>}
         subheader={
-          <>
+          <Stack direction={"column"}>
             <Typography variant={"h6"}>{title}</Typography>
             <Stack direction="row" gap={1} alignItems={"center"}>
-              <DateRange />
+              <DateRange color={"primary"} />
               <Typography>{date}</Typography>
             </Stack>
-          </>
+          </Stack>
         }
       />
       <CardContent>
-        <Typography>Skills</Typography>
+        <Stack direction={"column"} gap={1}>
+          <Typography>
+            <strong>Tech Stack used</strong>
+          </Typography>
+          <Box>
+            <Stack direction={"row"} spacing={1} useFlexGap flexWrap={"wrap"}>
+              {skills.map((skill) => (
+                <SkillTag key={skill.name} {...skill} />
+              ))}
+            </Stack>
+          </Box>
+        </Stack>
       </CardContent>
       <CardActions>
         <Button
