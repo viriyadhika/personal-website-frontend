@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Stack, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";

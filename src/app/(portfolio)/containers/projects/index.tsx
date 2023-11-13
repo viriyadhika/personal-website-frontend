@@ -1,4 +1,12 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Stack,
+  Typography,
+} from "@mui/material";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";
 
@@ -35,16 +43,15 @@ export default function Projects() {
         flexWrap={"wrap"}
         spacing={4}
       >
-        <Box
-          width={"20%"}
-          minWidth={200}
-          p={2}
-          sx={{ backgroundColor: "grey.50" }}
-        >
-          <Stack spacing={2}>
-            <Typography variant="h4">
-              My Projects and Learning Journey
-            </Typography>
+        <Card sx={{ flex: 1, minWidth: 200, maxWidth: 500 }}>
+          <CardHeader
+            title={
+              <Typography variant="h4">
+                My Projects and Learning Journey
+              </Typography>
+            }
+          />
+          <CardContent>
             <Typography>
               I started programming during the break period between my
               graduation and my first job out of college. Due to COVID-19 has
@@ -53,8 +60,8 @@ export default function Projects() {
               Habit Tracker. I continue programming afterwards, building a few
               more projects before landing myself a job in tech!
             </Typography>
-          </Stack>
-        </Box>
+          </CardContent>
+        </Card>
         <Stack spacing={2}>
           {projects.map((project) => (
             <Stack direction="row" spacing={1} key={project.name}>
