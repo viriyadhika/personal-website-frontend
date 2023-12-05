@@ -9,7 +9,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar bg="transparent" expand="lg">
-        <Navbar.Brand href="/old-portfolio">
+        <Navbar.Brand href="/">
           <Image
             fluid
             width="40rem"

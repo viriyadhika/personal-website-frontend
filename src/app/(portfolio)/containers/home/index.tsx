@@ -1,8 +1,9 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Snackbar, Stack, Typography } from "@mui/material";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { PORTFOLIO_PUBLIC, SOCIAL_PUBLIC } from "@/configs/route";
+import copy from "clipboard-copy";
 
 const Emphasize = ({ children }: { children: ReactNode }) => {
   return (
@@ -11,6 +12,73 @@ const Emphasize = ({ children }: { children: ReactNode }) => {
     </Typography>
   );
 };
+
+const CopyToClipboardButton = ({
+  textToCopy,
+  children,
+}: {
+  textToCopy: string;
+  children: ReactNode;
+}) => {
+  const [toastMessage, setToastMessage] = useState("");
+
+  const handleCopyClick = async () => {
+    try {
+      await copy(textToCopy);
+      setToastMessage(`${textToCopy} copied to the clipboard`);
+    } catch (e) {
+      setToastMessage("Something went wrong");
+    }
+  };
+
+  return (
+    <>
+      <Snackbar
+        open={Boolean(toastMessage)}
+        autoHideDuration={2000}
+        onClose={() => setToastMessage("")}
+        message={toastMessage}
+      />
+      <div
+        style={{
+          padding: 0,
+          backgroundColor: "transparent",
+          cursor: "pointer",
+        }}
+        onClick={handleCopyClick}
+      >
+        {children}
+      </div>
+    </>
+  );
+};
+
+const socials = [
+  {
+    name: "linkedin",
+    Component: ({ children }: { children: ReactNode }) => (
+      <a target="_blank" href={"https://linkedin.com/in/viriyadhika-putra"}>
+        {children}
+      </a>
+    ),
+  },
+  {
+    name: "github",
+    Component: ({ children }: { children: ReactNode }) => (
+      <a target="_blank" href={"https://github.com/viriyadhika"}>
+        {children}
+      </a>
+    ),
+  },
+  {
+    name: "gmail",
+    Component: ({ children }: { children: ReactNode }) => (
+      <CopyToClipboardButton textToCopy="viriya.dhika0@gmail.com">
+        {children}
+      </CopyToClipboardButton>
+    ),
+  },
+];
 
 export default function Home() {
   return (
@@ -55,21 +123,25 @@ export default function Home() {
               </Typography>
             </Stack>
             <Stack direction="row" spacing={2}>
-              {["linkedin", "github", "gmail"].map((name) => (
-                <ImageBorder key={name} size={50}>
-                  <ImageWrap size={30} src={`${SOCIAL_PUBLIC}/${name}`} />
-                </ImageBorder>
+              {socials.map(({ name, Component }) => (
+                <Component key={name}>
+                  <ImageBorder size={50}>
+                    <ImageWrap size={30} src={`${SOCIAL_PUBLIC}/${name}`} />
+                  </ImageBorder>
+                </Component>
               ))}
             </Stack>
           </Stack>
         </Stack>
-        <Button
-          variant="outlined"
-          color={"primary"}
-          sx={{ typography: "subheading", px: 3, py: 1 }}
-        >
-          Download my resume
-        </Button>
+        <a href={`${PORTFOLIO_PUBLIC}/Resume.pdf`} target="_blank">
+          <Button
+            variant="outlined"
+            color={"primary"}
+            sx={{ typography: "subheading", px: 3, py: 1 }}
+          >
+            Check out my resume
+          </Button>
+        </a>
       </Stack>
     </Box>
   );

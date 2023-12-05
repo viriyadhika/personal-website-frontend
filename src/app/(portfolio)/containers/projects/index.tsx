@@ -9,23 +9,29 @@ import {
 } from "@mui/material";
 import ImageWrap from "../../components/image";
 import ImageBorder from "../../components/image-border";
-import { PERSONAL_PROJECT_PUBLIC } from "@/configs/route";
+import {
+  OLD_PORTFOLIO_PROJECTS,
+  PERSONAL_PROJECT_PUBLIC,
+} from "@/configs/route";
 
 const projects = [
   {
     name: "Logistics Website",
     description: "A platform for people to share items",
     image: "logistics-logo",
+    link: "logistics",
   },
   {
     name: "Group Task App",
     description: "Task manager application for group projects",
     image: "grouptask-logo",
+    link: "grouptask",
   },
   {
     name: "Habit Tracker App",
     description: "Android app to track daily habit",
     image: "habit_tracker-logo",
+    link: "habit-tracker",
   },
 ];
 
@@ -77,7 +83,9 @@ export default function Projects() {
               <Stack justifyContent={"center"} spacing={1} flex={1}>
                 <Typography variant={"h5"}>{project.name}</Typography>
                 <Typography>{project.description}</Typography>
-                <Button variant={"outlined"}>Learn more</Button>
+                <a href={`${OLD_PORTFOLIO_PROJECTS}/${project.link}`}>
+                  <Button variant={"outlined"}>Learn more</Button>
+                </a>
               </Stack>
             </Stack>
           ))}

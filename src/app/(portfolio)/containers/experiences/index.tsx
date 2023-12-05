@@ -1,5 +1,6 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Job, { JobProps } from "./job";
+import { Section } from "../../constants";
 
 const jobs: JobProps[] = [
   {
@@ -116,17 +117,19 @@ const jobs: JobProps[] = [
 
 export default function Experiences() {
   return (
-    <Stack
-      p={2}
-      direction={"row"}
-      spacing={2}
-      justifyContent={"center"}
-      useFlexGap
-      flexWrap={"wrap"}
-    >
-      {jobs.map((job) => (
-        <Job key={job.company} {...job} />
-      ))}
+    <Stack p={2} spacing={2}>
+      <Typography variant={"h4"}>Work experiences</Typography>
+      <Stack
+        direction={"row"}
+        spacing={2}
+        justifyContent={"center"}
+        useFlexGap
+        flexWrap={"wrap"}
+      >
+        {jobs.map((job) => (
+          <Job key={job.company} {...job} />
+        ))}
+      </Stack>
     </Stack>
   );
 }

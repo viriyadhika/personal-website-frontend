@@ -55,7 +55,7 @@ const achievements: AchievementInfo[] = [
         title: "International Chemistry Olympiad (IChO) Azerbaijan 2015",
         date: "Jan 2015",
         description:
-          "Went through Indonesian National Science Olympiad where 4 people are selected out of thousands of studen",
+          "Went through Indonesian National Science Olympiad where 4 people are selected out of thousands of students",
       },
     ],
   },

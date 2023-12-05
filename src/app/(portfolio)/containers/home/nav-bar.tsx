@@ -8,7 +8,7 @@ export default function NavBar() {
       <Toolbar sx={{ backgroundColor: "grey.50" }}>
         <ImageWrap size={50} src={`${PORTFOLIO_PUBLIC}/VPlogo-final`} />
         <Stack ml={"auto"} direction={"row"} spacing={2}>
-          <Button color="info">My experiences</Button>
+          <Button>My experiences</Button>
           <Button>Skills</Button>
         </Stack>
       </Toolbar>
