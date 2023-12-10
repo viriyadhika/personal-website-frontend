@@ -11,6 +11,7 @@ import {
   PORTFOLIO_PUBLIC,
   SKILLS_PUBLIC,
 } from "@/configs/route";
+import { PROJECT_SUFFIX } from "./constants";
 
 export default function Home() {
   return (
@@ -84,7 +85,6 @@ function Hello() {
   );
 }
 
-const PROJECT_SUFFIX = "/old-portfolio/projects";
 function Projects() {
   return (
     <Container className="projects" fluid>

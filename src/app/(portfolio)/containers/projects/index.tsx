@@ -16,22 +16,23 @@ import {
 
 const projects = [
   {
+    name: "Habit Tracker App",
+    description: "An offline Android app to track daily habit",
+    image: "habit_tracker-logo",
+    link: "habit-tracker",
+  },
+  {
     name: "Logistics Website",
-    description: "A platform for people to share items",
+    description:
+      "A platform for people to share items accross different departments",
     image: "logistics-logo",
     link: "logistics",
   },
   {
     name: "Group Task App",
-    description: "Task manager application for group projects",
+    description: "Task manager application to delegate tasks in group projects",
     image: "grouptask-logo",
     link: "grouptask",
-  },
-  {
-    name: "Habit Tracker App",
-    description: "Android app to track daily habit",
-    image: "habit_tracker-logo",
-    link: "habit-tracker",
   },
 ];
 
@@ -65,8 +66,8 @@ export default function Projects() {
               graduation and my first job out of college. Due to COVID-19 has
               forced everyone indoor. While searching for something to do, I
               came across Android development which lead to my first project,
-              Habit Tracker. I continue programming afterwards, building a few
-              more projects before landing myself a job in tech!
+              Habit Tracker. I continue programming afterwards, mainly building
+              Full-Stack web applications before landing myself a job in tech!
             </Typography>
           </CardContent>
         </Card>

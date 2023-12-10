@@ -4,6 +4,7 @@ import ImageWrap from "../../components/image";
 import { PORTFOLIO_PUBLIC } from "@/configs/route";
 import ImageBorder from "../../components/image-border";
 import Achievement, { AchievementInfo } from "./achievement";
+import { ForwardedRef, forwardRef } from "react";
 
 const achievements: AchievementInfo[] = [
   {
@@ -73,9 +74,9 @@ const achievements: AchievementInfo[] = [
   },
 ];
 
-export default function Education() {
+function Education(_: {}, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <Stack p={2} gap={2}>
+    <Stack p={2} gap={2} ref={ref}>
       <Typography variant={"h4"}>Education & Achievement</Typography>
       <Stack
         direction={"row"}
@@ -110,3 +111,5 @@ export default function Education() {
     </Stack>
   );
 }
+
+export default forwardRef(Education);

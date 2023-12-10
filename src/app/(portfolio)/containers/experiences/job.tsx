@@ -62,7 +62,7 @@ export default function Job({
       <CardContent>
         <Stack direction={"column"} gap={1}>
           <Typography>
-            <strong>Tech Stack used</strong>
+            <strong>Skillset</strong>
           </Typography>
           <Box>
             <Stack direction={"row"} spacing={1} useFlexGap flexWrap={"wrap"}>

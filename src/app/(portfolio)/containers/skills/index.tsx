@@ -1,9 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Content from "./content";
+import { ForwardedRef, forwardRef } from "react";
 
-export default function Skills() {
+function Skills(_: {}, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <Box p={2}>
+    <Box p={2} ref={ref}>
       <Stack>
         <Typography variant={"h4"}>Skills</Typography>
         <Typography>
@@ -15,3 +16,5 @@ export default function Skills() {
     </Box>
   );
 }
+
+export default forwardRef(Skills);

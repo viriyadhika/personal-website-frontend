@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import "./global.css";
 import { PORTFOLIO_PUBLIC } from "@/configs/route";
+import { PROJECT_SUFFIX } from "./constants";
 
 export default function NavBar({ children }: { children: React.ReactNode }) {
   return (
@@ -23,9 +24,13 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="/projects/habit-tracker">Habit Tracker</Nav.Link>
-            <Nav.Link href="/projects/logistics">Logistics</Nav.Link>
-            <Nav.Link href="/projects/grouptask">Group Management</Nav.Link>
+            <Nav.Link href={`${PROJECT_SUFFIX}/habit-tracker`}>
+              Habit Tracker
+            </Nav.Link>
+            <Nav.Link href={`${PROJECT_SUFFIX}/logistics`}>Logistics</Nav.Link>
+            <Nav.Link href={`${PROJECT_SUFFIX}/grouptask`}>
+              Group Management
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

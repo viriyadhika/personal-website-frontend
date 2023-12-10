@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import Job, { JobProps } from "./job";
-import { Section } from "../../constants";
+import { ForwardedRef, forwardRef } from "react";
 
 const jobs: JobProps[] = [
   {
@@ -10,9 +10,10 @@ const jobs: JobProps[] = [
     date: "Jul 2023 - Present",
     descriptions: [
       `A part of data compass team in Tiktok Shop, which provides statistics and metrics to TikTok Shop creators and partners about their content monetary and non-monetary performance`,
-      `Built a React webpage to display TikTok Shop data embedded in TikTok App used by 300,000 weekly active users`,
+      `Built a React webpage embedded in TikTok App to display TikTok Shop data used by over 500,000 unique weekly active users`,
+      `Created new data dashboard and integrated diagnosis features in Tiktok Seller center mobile app, partner.tiktokshop.com and affiliate.tiktok.com which is used by tens of thousands of unique users daily`,
       `Use TikTok internal toolings such as build tools and infrastructure as well as different frontend development and Micro-Frontends frameworks to perform scalable deployment to multiple regions and countries`,
-      `Create a smooth native app experience by using animation library such as Framer motion`,
+      `Optimize a smooth close to native app experience by using animation library such as Framer motion`,
     ],
     skills: [
       {
@@ -115,9 +116,9 @@ const jobs: JobProps[] = [
   },
 ];
 
-export default function Experiences() {
+function Experiences(_: {}, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <Stack p={2} spacing={2}>
+    <Stack p={2} spacing={2} ref={ref}>
       <Typography variant={"h4"}>Work experiences</Typography>
       <Stack
         direction={"row"}
@@ -133,3 +134,5 @@ export default function Experiences() {
     </Stack>
   );
 }
+
+export default forwardRef(Experiences);

@@ -7,20 +7,23 @@ import Experiences from "./containers/experiences";
 import { lazy } from "react";
 import theme from "./theme";
 import Education from "./containers/education";
+import useScroll from "./hooks/use-scroll";
 
 const Skills = lazy(() => import("./containers/skills"));
 const Projects = lazy(() => import("./containers/projects"));
 
 export default function Page() {
+  const { scrollTo, experienceRef, skillsRef, educationRef } = useScroll();
+
   return (
     <ThemeProvider theme={theme}>
       <Box pb={2}>
         <Home />
-        <NavBar />
-        <Experiences />
-        <Education />
+        <NavBar onClick={scrollTo} />
+        <Experiences ref={experienceRef} />
+        <Education ref={educationRef} />
         <Projects />
-        <Skills />
+        <Skills ref={skillsRef} />
       </Box>
     </ThemeProvider>
   );
