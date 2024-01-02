@@ -10,7 +10,7 @@ const jobs: JobProps[] = [
     date: "Jul 2023 - Present",
     descriptions: [
       `A part of data compass team in Tiktok Shop, which provides statistics and metrics to TikTok Shop creators and partners about their content monetary and non-monetary performance`,
-      `Built a React webpage embedded in TikTok App to display TikTok Shop data used by over 500,000 unique weekly active users`,
+      `Built a React webpage embedded in TikTok App to display TikTok Shop data used by over 1 million unique weekly active users`,
       `Created new data dashboard and integrated diagnosis features in Tiktok Seller center mobile app, partner.tiktokshop.com and affiliate.tiktok.com which is used by tens of thousands of unique users daily`,
       `Use TikTok internal toolings such as build tools and infrastructure as well as different frontend development and Micro-Frontends frameworks to perform scalable deployment to multiple regions and countries`,
       `Optimize a smooth close to native app experience by using animation library such as Framer motion`,
