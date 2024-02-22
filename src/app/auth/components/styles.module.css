@@ -1,0 +1,15 @@
+.contentContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vw;
+}
+
+.card {
+  width: 40%;
+}
+
+.form {
+  display: grid;
+  grid-gap: 20px;
+}
