@@ -4,6 +4,7 @@ import EmailPassword, { EmailPasswordForm } from "../components/email-password";
 import useAPI from "@/app/common/hooks/use-api";
 import { APIHandlerProvider } from "@/app/common/context/APIContext";
 import { post } from "@/app/common/hooks/fetcher";
+import { Component } from "react";
 
 function Login() {
   const { callAPI, isAPIRunning } = useAPI(
