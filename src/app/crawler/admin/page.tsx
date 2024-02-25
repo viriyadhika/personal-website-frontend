@@ -1,7 +1,8 @@
 "use client";
 import { post } from "@/app/common/hooks/fetcher";
 import useAPI from "@/app/common/hooks/use-api";
-import { Box, Button, CircularProgress, TextField } from "@mui/material";
+import { Box, Button, Card, CircularProgress, TextField } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 enum BatchField {
@@ -22,40 +23,50 @@ export default function Admin() {
   });
   const { register, handleSubmit } = useForm<BatchForm>();
 
+  const router = useRouter();
+
   return (
     <Box display={"flex"} justifyContent={"center"}>
-      <Box display={"block"}>
-        <form
-          onSubmit={handleSubmit((result) => {
-            callAPI(result, () => {
+      <form
+        onSubmit={handleSubmit((result) => {
+          callAPI(
+            result,
+            () => {
               alert("success!");
-            });
-          })}
-        >
-          <div>
-            <TextField
-              {...register(BatchField.LOCATION, { required: true })}
-              required={true}
-              label="Location"
-              variant="outlined"
-            />
-          </div>
-          <div>
-            <TextField
-              {...register(BatchField.ROLE, { required: true })}
-              required={true}
-              label="Role"
-              variant="outlined"
-            />
-          </div>
-          {isAPIRunning && <CircularProgress />}
-          <div>
+            },
+            (e) => {
+              if (e?.response?.status === 401) {
+                router.push("/auth/login");
+              }
+            }
+          );
+        })}
+      >
+        <Card variant="outlined" sx={{ padding: 3 }}>
+          <Box display={"flex"} flexDirection={"column"} gap={2}>
+            <div>
+              <TextField
+                {...register(BatchField.LOCATION, { required: true })}
+                required={true}
+                label="Location"
+                variant="outlined"
+              />
+            </div>
+            <div>
+              <TextField
+                {...register(BatchField.ROLE, { required: true })}
+                required={true}
+                label="Role"
+                variant="outlined"
+              />
+            </div>
+            {isAPIRunning && <CircularProgress />}
             <Button variant="contained" type={"submit"}>
               Submit
             </Button>
-          </div>
-        </form>
-      </Box>
+          </Box>
+        </Card>
+      </form>
     </Box>
   );
 }

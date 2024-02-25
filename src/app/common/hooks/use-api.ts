@@ -1,5 +1,6 @@
 import { APIContext } from "../context/APIContext";
 import { useContext, useState } from "react";
+import { noop } from "@/utilities/utils";
 
 function useAPI<Request, Response>(
   fetcher: (request: Request) => Promise<Response>
@@ -9,8 +10,10 @@ function useAPI<Request, Response>(
   const [result, setResult] = useState<Response | null>(null);
   async function callAPI(
     request: Request,
-    onSuccess: (response: Response) => void
+    onSuccess: (response: Response) => void,
+    onError?: (e: any) => void
   ) {
+    const finalOnError = onError || noop;
     onLoadAPI();
     try {
       const response = await fetcher(request);
@@ -18,6 +21,7 @@ function useAPI<Request, Response>(
       onSuccess(response);
       setResult(response);
     } catch (e: any) {
+      finalOnError(e);
       if (e?.response?.data?.message) {
         onErrorAPI(e.response.data.message);
       } else if (e?.message) {

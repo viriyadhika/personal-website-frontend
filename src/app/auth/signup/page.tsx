@@ -5,21 +5,21 @@ import useAPI from "@/app/common/hooks/use-api";
 import { APIHandlerProvider } from "@/app/common/context/APIContext";
 import { post } from "@/app/common/hooks/fetcher";
 
-function Login() {
+function Signup() {
   const { callAPI, isAPIRunning } = useAPI(
     async ({ email, password }: EmailPasswordForm) => {
-      return post("/auth/login", { username: email, password });
+      return post("/auth/signup", { username: email, password });
     }
   );
-
   const onValid = (formData: EmailPasswordForm) => {
-    callAPI(formData, (result) => {});
+    callAPI(formData, () => {
+      alert("Success!");
+    });
   };
-
   return (
     <EmailPassword
       onValid={onValid}
-      title={"Log In"}
+      title={"Sign Up"}
       isProcessing={isAPIRunning}
     />
   );
@@ -28,7 +28,7 @@ function Login() {
 export default function LoginWithWrapper() {
   return (
     <APIHandlerProvider>
-      <Login />
+      <Signup />
     </APIHandlerProvider>
   );
 }
