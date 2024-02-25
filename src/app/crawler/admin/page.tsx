@@ -1,4 +1,5 @@
 "use client";
+import { APIHandlerProvider } from "@/app/common/context/APIContext";
 import { post } from "@/app/common/hooks/fetcher";
 import useAPI from "@/app/common/hooks/use-api";
 import { Box, Button, Card, CircularProgress, TextField } from "@mui/material";
@@ -14,7 +15,7 @@ export type BatchForm = {
   [key in BatchField]: string;
 };
 
-export default function Admin() {
+function Admin() {
   const { callAPI, isAPIRunning } = useAPI(async (request: BatchForm) => {
     return post("/crawler/batch", {
       location: request.location,
@@ -68,5 +69,13 @@ export default function Admin() {
         </Card>
       </form>
     </Box>
+  );
+}
+
+export default function AdminWithWrapper() {
+  return (
+    <APIHandlerProvider>
+      <Admin />
+    </APIHandlerProvider>
   );
 }

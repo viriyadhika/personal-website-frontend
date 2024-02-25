@@ -13,6 +13,7 @@ import Link from "next/link";
 import useAPI from "@/app/common/hooks/use-api";
 import { useEffect } from "react";
 import { noop } from "@/utilities/utils";
+import { APIHandlerProvider } from "@/app/common/context/APIContext";
 
 async function getData() {
   const res = await axios.get<Array<Batch>>(
@@ -32,7 +33,7 @@ function mapStatusToStr(status: Status) {
   return statusMap[status];
 }
 
-export default function Batches() {
+function Batches() {
   const { callAPI, isAPIRunning, result } = useAPI(getData);
 
   useEffect(() => {
@@ -79,5 +80,13 @@ export default function Batches() {
         </Table>
       </TableContainer>
     </div>
+  );
+}
+
+export default function BatchesWithWrapper() {
+  return (
+    <APIHandlerProvider>
+      <Batches />
+    </APIHandlerProvider>
   );
 }
