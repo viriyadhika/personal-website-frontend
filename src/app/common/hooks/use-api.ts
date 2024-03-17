@@ -1,5 +1,5 @@
 import { APIContext } from "../context/APIContext";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { noop } from "@/utilities/utils";
 
 function useAPI<Request, Response>(
@@ -8,11 +8,11 @@ function useAPI<Request, Response>(
   const { isAPIRunning, onErrorAPI, onLoadAPI, onAPIReset } =
     useContext(APIContext);
   const [result, setResult] = useState<Response | null>(null);
-  async function callAPI(
+  const callAPI = useCallback(async (
     request: Request,
     onSuccess: (response: Response) => void,
     onError?: (e: any) => void
-  ) {
+  ) => {
     const finalOnError = onError || noop;
     onLoadAPI();
     try {
@@ -30,7 +30,7 @@ function useAPI<Request, Response>(
         onErrorAPI("Unknown error");
       }
     }
-  }
+  }, [fetcher, onErrorAPI, onLoadAPI, onAPIReset])
 
   return {
     callAPI,

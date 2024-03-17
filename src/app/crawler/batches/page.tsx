@@ -38,7 +38,7 @@ function Batches() {
 
   useEffect(() => {
     callAPI(undefined, noop);
-  }, []);
+  }, [callAPI]);
 
   if (isAPIRunning || !result) {
     return <div>Loading</div>;

@@ -2,6 +2,8 @@ export type Job = {
   company: string;
   employee: string | null;
   job_id: string;
+  job_name: string;
+  is_new: boolean
 };
 
 export enum Status {

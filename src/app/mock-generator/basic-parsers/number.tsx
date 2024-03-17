@@ -5,7 +5,7 @@ import { NumberOption, Param } from "../utils/type";
 import dayjs from "dayjs";
 import { dateManager } from "../utils/utils";
 import NumberInput from "../components/number-input";
-import { DatePicker } from "../components/date-picker";
+import { DatePicker } from "../../common/components/date-picker";
 
 const options = [
   NumberOption.HARDCODED,
