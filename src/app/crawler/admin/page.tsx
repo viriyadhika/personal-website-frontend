@@ -1,46 +1,23 @@
 "use client";
 import { APIHandlerProvider } from "@/app/common/context/APIContext";
-import { post } from "@/app/common/hooks/fetcher";
-import useAPI from "@/app/common/hooks/use-api";
 import { Box, Button, Card, CircularProgress, TextField } from "@mui/material";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-
-enum BatchField {
-  LOCATION = "location",
-  ROLE = "role",
-}
-
-export type BatchForm = {
-  [key in BatchField]: string;
-};
+import {
+  BatchField,
+  BatchForm,
+  useSearchBatch,
+} from "../services/use-search-batch";
 
 function Admin() {
-  const { callAPI, isAPIRunning } = useAPI(async (request: BatchForm) => {
-    return post("/crawler/batch", {
-      location: request.location,
-      keywords: request.role,
-    });
-  });
-  const { register, handleSubmit } = useForm<BatchForm>();
+  const { isAPIRunning, search } = useSearchBatch();
 
-  const router = useRouter();
+  const { register, handleSubmit } = useForm<BatchForm>();
 
   return (
     <Box display={"flex"} justifyContent={"center"}>
       <form
         onSubmit={handleSubmit((result) => {
-          callAPI(
-            result,
-            () => {
-              alert("success!");
-            },
-            (e) => {
-              if (e?.response?.status === 401) {
-                router.push("/auth/login");
-              }
-            }
-          );
+          search(result);
         })}
       >
         <Card variant="outlined" sx={{ padding: 3 }}>
