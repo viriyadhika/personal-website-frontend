@@ -16,6 +16,7 @@ import { noop } from "@/utilities/utils";
 import { APIHandlerProvider } from "@/app/common/context/APIContext";
 import { useSearchBatch } from "../services/use-search-batch";
 import { Button } from "@mui/material";
+import dayjs from "dayjs";
 
 async function getData() {
   const res = await axios.get<Array<Batch>>(
@@ -59,7 +60,7 @@ function Batches() {
                     {batch_id}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {last_updated}
+                    {dayjs.unix(last_updated).format("DD/MM/YYYY HH:mm (Z)")}
                   </TableCell>
                   <TableCell>
                     <Button
