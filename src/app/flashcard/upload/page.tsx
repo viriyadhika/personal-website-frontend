@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/env/env";
 import { Box, Button, Card, Input, Typography } from "@mui/material";
+import { getAuthOptions } from "@/utilities/utils";
 
 export default function UploadFile() {
   const [file, setFile] = useState<File | null>(null);
@@ -28,7 +29,8 @@ export default function UploadFile() {
             try {
               await axios.post(
                 `${NEXT_PUBLIC_API_URL}/flashcard/upload_file`,
-                formData
+                formData,
+                getAuthOptions()
               );
             } catch (e) {
               console.error(e);
