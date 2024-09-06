@@ -30,9 +30,9 @@ function generateOptions(answer: string, questions: Array<QuestionAnswer>) {
   }
   const answerIdx = ansLength - 1;
   // Placeholder
-  result.push("");
+  result.push(answer);
 
-  const idxToSwap = Math.floor(Math.random() * decoyAnswerLength);
+  const idxToSwap = Math.floor(Math.random() * ansLength);
   result[answerIdx] = result[idxToSwap];
   result[idxToSwap] = answer;
 
