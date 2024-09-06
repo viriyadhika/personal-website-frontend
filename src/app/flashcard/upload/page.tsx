@@ -27,7 +27,7 @@ export default function UploadFile() {
             setIsLoading(true);
             try {
               await axios.post(
-                `${NEXT_PUBLIC_API_URL}/api/flashcard/upload_file`,
+                `${NEXT_PUBLIC_API_URL}/flashcard/upload_file`,
                 formData
               );
             } catch (e) {
