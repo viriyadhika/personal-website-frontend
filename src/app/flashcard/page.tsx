@@ -145,7 +145,9 @@ function FlashcardContent({
     setState((cur) => mapping[cur]);
     const newCurrentQuestion = pickRandomQuestion(unusedQuestion);
     setCurrentQuestion(newCurrentQuestion);
-    setOptions(generateOptions(newCurrentQuestion.answer, unusedQuestion));
+    setOptions(
+      generateOptions(newCurrentQuestion.answer, initialUnusedQuestion)
+    );
   }
 
   return (
