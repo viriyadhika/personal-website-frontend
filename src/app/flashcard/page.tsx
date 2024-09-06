@@ -21,11 +21,20 @@ function pickRandomQuestion(questions: Array<QuestionAnswer>) {
 }
 
 function generateOptions(answer: string, questions: Array<QuestionAnswer>) {
-  const result = [answer];
-  for (let i = 0; i < 3; i++) {
+  const result = [];
+  const ansLength = 4;
+  const decoyAnswerLength = ansLength - 1;
+  for (let i = 0; i < decoyAnswerLength; i++) {
     const randIdx = randomize(questions.length);
     result.push(questions[randIdx].answer);
   }
+  const answerIdx = ansLength - 1;
+  // Placeholder
+  result.push("");
+
+  const idxToSwap = Math.floor(Math.random() * decoyAnswerLength);
+  result[answerIdx] = result[idxToSwap];
+  result[idxToSwap] = answer;
 
   return result;
 }

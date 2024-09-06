@@ -5,10 +5,12 @@ import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/env/env";
 import { Box, Button, Card, Input, Typography } from "@mui/material";
 import { getAuthOptions } from "@/utilities/utils";
+import usePushLogin from "@/app/common/hooks/use-push-login";
 
 export default function UploadFile() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { handleError } = usePushLogin();
   return (
     <Box
       height={"100vh"}
@@ -34,6 +36,7 @@ export default function UploadFile() {
               );
             } catch (e) {
               console.error(e);
+              handleError(e);
             } finally {
               setIsLoading(false);
             }

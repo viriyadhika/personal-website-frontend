@@ -1,6 +1,6 @@
 import { post } from "@/app/common/hooks/fetcher";
 import useAPI from "@/app/common/hooks/use-api";
-import { useRouter } from "next/navigation";
+import usePushLogin from "@/app/common/hooks/use-push-login";
 
 export enum BatchField {
   LOCATION = "location",
@@ -12,7 +12,7 @@ export type BatchForm = {
 };
 
 export function useSearchBatch() {
-  const router = useRouter();
+  const { handleError } = usePushLogin();
 
   const { callAPI, isAPIRunning } = useAPI(async (request: BatchForm) => {
     return post("/crawler/batch", {
@@ -28,9 +28,7 @@ export function useSearchBatch() {
         alert("success!");
       },
       (e) => {
-        if (e?.response?.status === 401) {
-          router.push("/auth/login");
-        }
+        handleError(e);
       }
     );
   };
