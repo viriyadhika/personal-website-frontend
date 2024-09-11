@@ -9,6 +9,7 @@ import { NEXT_PUBLIC_API_URL } from "@/env/env";
 import { noop } from "@/utilities/utils";
 import { QuestionAnswer } from "./types";
 import FlashcardContent from "./flashcard-content";
+import usePushLogin from "../common/hooks/use-push-login";
 
 function getData(request: { file_name: string }) {
   return axios.post<Array<QuestionAnswer>>(
@@ -51,6 +52,8 @@ function FlashcardOptionsWithContent({
     );
   });
 
+  const { handleError } = usePushLogin();
+
   return (
     <Box
       display={"flex"}
@@ -74,7 +77,7 @@ function FlashcardOptionsWithContent({
       <Button
         color="error"
         onClick={() => {
-          callAPI({ file_name: option }, onDeleted);
+          callAPI({ file_name: option }, onDeleted, (e) => handleError(e));
         }}
       >
         Delete
