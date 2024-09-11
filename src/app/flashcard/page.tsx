@@ -1,187 +1,28 @@
 "use client";
 
-import { Box, Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, MenuItem, Select, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import useAPI from "../common/hooks/use-api";
 import { APIHandlerProvider } from "../common/context/APIContext";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/env/env";
 import { noop } from "@/utilities/utils";
+import { QuestionAnswer } from "./types";
+import FlashcardContent from "./flashcard-content";
 
-export type QuestionAnswer = { question: string; answer: string };
-
-function randomize(length: number) {
-  return Math.floor(Math.random() * length);
-}
-
-function pickRandomQuestion(questions: Array<QuestionAnswer>) {
-  const randIdx = randomize(questions.length);
-
-  return questions[randIdx];
-}
-
-function generateOptions(answer: string, questions: Array<QuestionAnswer>) {
-  const result = [];
-  const ansLength = 4;
-  const decoyAnswerLength = ansLength - 1;
-  for (let i = 0; i < decoyAnswerLength; i++) {
-    const randIdx = randomize(questions.length);
-    result.push(questions[randIdx].answer);
-  }
-  const answerIdx = ansLength - 1;
-  // Placeholder
-  result.push(answer);
-
-  const idxToSwap = Math.floor(Math.random() * ansLength);
-  result[answerIdx] = result[idxToSwap];
-  result[idxToSwap] = answer;
-
-  result.push("I don't know");
-
-  return result;
-}
-
-enum State {
-  ANSWERING = "ANSWERING",
-  SHOW_RESULT = "SHOW_RESULT",
-}
-
-function Answering({
-  currentQuestion,
-  options,
-  onAnswer,
-}: {
-  currentQuestion: QuestionAnswer;
-  options: string[];
-  onAnswer: (ans: string) => void;
-}) {
-  return (
-    <Box display={"flex"} flexDirection={"column"} gap={2}>
-      <Typography variant="h5">{currentQuestion.question}</Typography>
-      {options.map((opt, idx) => {
-        return (
-          <Box key={`${opt}-${idx}`}>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => {
-                onAnswer(opt);
-              }}
-            >
-              {opt}
-            </Button>
-          </Box>
-        );
-      })}
-    </Box>
+function getData(request: { file_name: string }) {
+  return axios.post<Array<QuestionAnswer>>(
+    `${NEXT_PUBLIC_API_URL}/flashcard/get_data`,
+    request
   );
 }
 
-function Result({
-  currentQuestion,
-  answer,
-  onNext,
-}: {
-  currentQuestion: QuestionAnswer;
-  answer: string;
-  onNext: () => void;
-}) {
-  return (
-    <Box display={"flex"} flexDirection={"column"} gap={2}>
-      {currentQuestion.answer === answer ? (
-        <Typography variant={"body1"} color={"success"}>
-          Correct!
-        </Typography>
-      ) : (
-        <Box>
-          <Typography variant={"body1"} color={"error"}>
-            Wrong!
-          </Typography>
-          <Typography variant={"body1"} color={"info"}>
-            {currentQuestion.question}
-          </Typography>
-          <Typography variant={"body1"} color={"info"}>
-            {currentQuestion.answer}
-          </Typography>
-        </Box>
-      )}
-      <Button variant="outlined" onClick={onNext}>
-        Next
-      </Button>
-    </Box>
-  );
-}
-
-function FlashcardContent({
-  initialUnusedQuestion,
-}: {
-  initialUnusedQuestion: Array<QuestionAnswer>;
-}) {
-  const initialQuestion = pickRandomQuestion(initialUnusedQuestion);
-  const initialOptions = generateOptions(
-    initialQuestion.answer,
-    initialUnusedQuestion
-  );
-  const [state, setState] = useState<State>(State.ANSWERING);
-  const [unusedQuestion, setUnusedQuestion] = useState(initialUnusedQuestion);
-  const [currentQuestion, setCurrentQuestion] = useState(initialQuestion);
-  const [options, setOptions] = useState(initialOptions);
-  const [answer, setAnswer] = useState("");
-
-  const mapping: Record<State, State> = {
-    [State.ANSWERING]: State.SHOW_RESULT,
-    [State.SHOW_RESULT]: State.ANSWERING,
-  };
-
-  function onAnswer(answer: string) {
-    setState((cur) => mapping[cur]);
-    if (answer === currentQuestion.answer) {
-      setUnusedQuestion((cur) =>
-        cur.filter((qn) => qn.question !== currentQuestion.question)
-      );
-    }
-    setAnswer(answer);
-  }
-
-  function onNext() {
-    setState((cur) => mapping[cur]);
-    const newCurrentQuestion = pickRandomQuestion(unusedQuestion);
-    setCurrentQuestion(newCurrentQuestion);
-    setOptions(
-      generateOptions(newCurrentQuestion.answer, initialUnusedQuestion)
-    );
-  }
-
-  return (
-    <>
-      {state === State.ANSWERING && (
-        <Answering
-          currentQuestion={currentQuestion}
-          options={options}
-          onAnswer={onAnswer}
-        />
-      )}
-      {state === State.SHOW_RESULT && (
-        <Result
-          currentQuestion={currentQuestion}
-          answer={answer}
-          onNext={onNext}
-        />
-      )}
-    </>
-  );
-}
-
-function FlashcardClient() {
-  const { callAPI, result, isAPIRunning } = useAPI(async () => {
-    return await axios.post<Array<QuestionAnswer>>(
-      `${NEXT_PUBLIC_API_URL}/flashcard/get_data`
-    );
-  });
+function FlashcardCard({ option }: { option: string }) {
+  const { callAPI, result, isAPIRunning } = useAPI(getData);
 
   useEffect(() => {
-    callAPI({}, noop);
-  }, []);
+    callAPI({ file_name: option }, noop);
+  }, [option]);
 
   if (isAPIRunning) {
     return <Typography variant="body1">Loading</Typography>;
@@ -192,6 +33,60 @@ function FlashcardClient() {
   }
 
   return <FlashcardContent initialUnusedQuestion={result.data} />;
+}
+
+function FlashcardOptionsWithContent({ options }: { options: string[] }) {
+  const [option, setOption] = useState(options[0]);
+
+  return (
+    <Box
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"center"}
+      alignItems={"center"}
+      gap={2}
+    >
+      <Select
+        value={option}
+        onChange={(e) => {
+          setOption(e.target.value);
+        }}
+      >
+        {options.map((opt) => (
+          <MenuItem key={opt} value={opt}>
+            {opt}
+          </MenuItem>
+        ))}
+      </Select>
+      <Card style={{ padding: 24 }}>
+        <FlashcardCard option={option} />
+      </Card>
+    </Box>
+  );
+}
+
+function getOptions() {
+  return axios.post<Array<string>>(
+    `${NEXT_PUBLIC_API_URL}/flashcard/get_options`
+  );
+}
+
+function FlashcardClient() {
+  const { callAPI, result, isAPIRunning } = useAPI(getOptions);
+
+  useEffect(() => {
+    callAPI({}, noop);
+  }, []);
+
+  if (isAPIRunning) {
+    return null;
+  }
+
+  if (!result?.data || result?.data.length === 0) {
+    return <Typography variant="body1">Nothing uploaded</Typography>;
+  }
+
+  return <FlashcardOptionsWithContent options={result.data} />;
 }
 
 export default function FlashcardPage() {
@@ -210,7 +105,7 @@ export default function FlashcardPage() {
         height={"100vh"}
         width={"100%"}
       >
-        <Card style={{ padding: 24 }}>{isClient && <FlashcardClient />}</Card>
+        {isClient && <FlashcardClient />}
       </Box>
     </APIHandlerProvider>
   );
