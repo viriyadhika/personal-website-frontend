@@ -35,8 +35,21 @@ function FlashcardCard({ option }: { option: string }) {
   return <FlashcardContent initialUnusedQuestion={result.data} />;
 }
 
-function FlashcardOptionsWithContent({ options }: { options: string[] }) {
+function FlashcardOptionsWithContent({
+  options,
+  onDeleted,
+}: {
+  options: string[];
+  onDeleted: () => void;
+}) {
   const [option, setOption] = useState(options[0]);
+
+  const { callAPI } = useAPI(async (request) => {
+    const _ = await axios.post<Array<QuestionAnswer>>(
+      `${NEXT_PUBLIC_API_URL}/flashcard/delete_option`,
+      request
+    );
+  });
 
   return (
     <Box
@@ -58,6 +71,14 @@ function FlashcardOptionsWithContent({ options }: { options: string[] }) {
           </MenuItem>
         ))}
       </Select>
+      <Button
+        color="error"
+        onClick={() => {
+          callAPI({ file_name: option }, onDeleted);
+        }}
+      >
+        Delete
+      </Button>
       <Card style={{ padding: 24 }}>
         <FlashcardCard option={option} />
       </Card>
@@ -86,7 +107,12 @@ function FlashcardClient() {
     return <Typography variant="body1">Nothing uploaded</Typography>;
   }
 
-  return <FlashcardOptionsWithContent options={result.data} />;
+  return (
+    <FlashcardOptionsWithContent
+      options={result.data}
+      onDeleted={() => callAPI({}, noop)}
+    />
+  );
 }
 
 export default function FlashcardPage() {
