@@ -36,6 +36,8 @@ function generateOptions(answer: string, questions: Array<QuestionAnswer>) {
   result[answerIdx] = result[idxToSwap];
   result[idxToSwap] = answer;
 
+  result.push("I don't know");
+
   return result;
 }
 
