@@ -6,7 +6,7 @@ import useAPI from "../common/hooks/use-api";
 import { APIHandlerProvider } from "../common/context/APIContext";
 import axios from "axios";
 import { NEXT_PUBLIC_API_URL } from "@/env/env";
-import { noop } from "@/utilities/utils";
+import { getAuthOptions, noop } from "@/utilities/utils";
 import { QuestionAnswer } from "./types";
 import FlashcardContent from "./flashcard-content";
 import usePushLogin from "../common/hooks/use-push-login";
@@ -48,7 +48,8 @@ function FlashcardOptionsWithContent({
   const { callAPI } = useAPI(async (request) => {
     const _ = await axios.post<Array<QuestionAnswer>>(
       `${NEXT_PUBLIC_API_URL}/flashcard/delete_option`,
-      request
+      request,
+      getAuthOptions()
     );
   });
 
