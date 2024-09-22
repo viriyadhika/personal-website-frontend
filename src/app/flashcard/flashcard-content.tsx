@@ -36,6 +36,7 @@ function generateOptions(answer: string, questions: Array<QuestionAnswer>) {
 enum State {
   ANSWERING = "ANSWERING",
   SHOW_RESULT = "SHOW_RESULT",
+  END = "END",
 }
 
 function Answering({
@@ -120,13 +121,8 @@ export default function FlashcardContent({
   const [options, setOptions] = useState(initialOptions);
   const [answer, setAnswer] = useState("");
 
-  const mapping: Record<State, State> = {
-    [State.ANSWERING]: State.SHOW_RESULT,
-    [State.SHOW_RESULT]: State.ANSWERING,
-  };
-
   function onAnswer(answer: string) {
-    setState((cur) => mapping[cur]);
+    setState(State.SHOW_RESULT);
     if (answer === currentQuestion.answer) {
       setUnusedQuestion((cur) =>
         cur.filter((qn) => qn.question !== currentQuestion.question)
@@ -136,7 +132,11 @@ export default function FlashcardContent({
   }
 
   function onNext() {
-    setState((cur) => mapping[cur]);
+    if (unusedQuestion.length === 0) {
+      setState(State.END);
+      return;
+    }
+    setState(State.ANSWERING);
     const newCurrentQuestion = pickRandomQuestion(unusedQuestion);
     setCurrentQuestion(newCurrentQuestion);
     setOptions(
@@ -159,6 +159,9 @@ export default function FlashcardContent({
           answer={answer}
           onNext={onNext}
         />
+      )}
+      {state === State.END && (
+        <Typography variant={"body1"}>End of set</Typography>
       )}
     </>
   );

@@ -29,7 +29,7 @@ function FlashcardCard({ option }: { option: string }) {
     return <Typography variant="body1">Loading</Typography>;
   }
 
-  if (!result?.data) {
+  if (!result?.data || result.data.length === 0) {
     return <Typography variant="body1">No result</Typography>;
   }
 
