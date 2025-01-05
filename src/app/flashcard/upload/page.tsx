@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
-import { NEXT_PUBLIC_API_URL } from "@/env/env";
 import { Box, Button, Card, Input, Typography } from "@mui/material";
-import { getAuthOptions } from "@/utilities/utils";
 import usePushLogin from "@/app/common/hooks/use-push-login";
+import { postForm } from "@/app/common/hooks/fetcher";
 
 export default function UploadFile() {
   const [file, setFile] = useState<File | null>(null);
@@ -25,15 +23,9 @@ export default function UploadFile() {
         onSubmit={async (e) => {
           e.preventDefault();
           if (file) {
-            const formData = new FormData();
-            formData.append("file", file);
             setIsLoading(true);
             try {
-              await axios.post(
-                `${NEXT_PUBLIC_API_URL}/flashcard/upload_file`,
-                formData,
-                getAuthOptions()
-              );
+              await postForm("/flashcard/upload_file", { file: file });
             } catch (e) {
               console.error(e);
               handleError(e);

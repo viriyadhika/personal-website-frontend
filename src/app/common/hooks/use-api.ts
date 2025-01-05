@@ -25,8 +25,8 @@ function useAPI<Request, Response>(
       } catch (e: any) {
         setIsAPIRunning(false);
         finalOnError(e);
-        if (e?.response?.data?.message) {
-          onErrorAPI(e.response.data.message);
+        if (e?.response?.data?.detail) {
+          onErrorAPI(e.response.data.detail);
         } else if (e?.message) {
           onErrorAPI(e.message);
         } else {

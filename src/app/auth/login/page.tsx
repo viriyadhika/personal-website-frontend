@@ -3,14 +3,14 @@
 import EmailPassword, { EmailPasswordForm } from "../components/email-password";
 import useAPI from "@/app/common/hooks/use-api";
 import { APIHandlerProvider } from "@/app/common/context/APIContext";
-import { post } from "@/app/common/hooks/fetcher";
+import { postForm } from "@/app/common/hooks/fetcher";
 import { loginCallback } from "@/app/common/constants";
 import { useRouter } from "next/navigation";
 
 function Login() {
   const { callAPI, isAPIRunning } = useAPI(
     async ({ email, password }: EmailPasswordForm) => {
-      return post("/auth/login", { username: email, password });
+      return postForm("/auth/login", { username: email, password });
     }
   );
   const router = useRouter();

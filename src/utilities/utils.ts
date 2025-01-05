@@ -10,7 +10,7 @@ export function getAuthOptions() {
   return {
     withCredentials: true,
     headers: {
-      "x-csrf-token": getCookie("csrf_access_token"),
+      Authorization: `Bearer ${getCookie("access_token_cookie")}`,
     },
   };
 }
