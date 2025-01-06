@@ -44,6 +44,7 @@ export default function NavBar({
           {buttons.map((button) => {
             return (
               <Button
+                variant={"text"}
                 sx={{ display: { sm: "block", xs: "none" } }}
                 key={button.section}
                 onClick={() => {

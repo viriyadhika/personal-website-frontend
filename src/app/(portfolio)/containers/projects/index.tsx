@@ -52,7 +52,13 @@ export default function Projects() {
         useFlexGap
         spacing={4}
       >
-        <Card sx={{ flex: 1, minWidth: 250, maxWidth: 500 }}>
+        <Card
+          sx={{
+            flex: 1,
+            minWidth: 250,
+            maxWidth: 500,
+          }}
+        >
           <CardHeader
             title={
               <Typography variant="h5">
@@ -61,31 +67,32 @@ export default function Projects() {
             }
           />
           <CardContent>
-            <Typography>
+            <Typography variant={"body1"}>
               I started programming during the break period between my
-              graduation and my first job out of college. Due to COVID-19 has
-              forced everyone indoor. While searching for something to do, I
-              came across Android development which lead to my first project,
-              Habit Tracker. I continue programming afterwards, mainly building
-              Full-Stack web applications before landing myself a job in tech!
+              graduation and my first job out of college. I initially came
+              across Android development which lead to my first project, Habit
+              Tracker. I still ocassionally build Full-Stack web applications
+              now!
             </Typography>
           </CardContent>
         </Card>
         <Stack spacing={2}>
           {projects.map((project) => (
             <Stack direction="row" spacing={2} key={project.name}>
-              <ImageBorder size={140}>
+              <ImageBorder size={120}>
                 <ImageWrap
-                  size={120}
+                  size={100}
                   rounded
                   src={`${PERSONAL_PROJECT_PUBLIC}/${project.image}`}
                 />
               </ImageBorder>
               <Stack justifyContent={"center"} spacing={1} flex={1}>
-                <Typography variant={"h5"}>{project.name}</Typography>
-                <Typography>{project.description}</Typography>
+                <Typography variant={"h6"}>{project.name}</Typography>
+                <Typography variant={"body1"}>{project.description}</Typography>
                 <a href={`${OLD_PORTFOLIO_PROJECTS}/${project.link}`}>
-                  <Button variant={"outlined"}>Learn more</Button>
+                  <Button size={"small"} variant={"outlined"}>
+                    Learn more
+                  </Button>
                 </a>
               </Stack>
             </Stack>

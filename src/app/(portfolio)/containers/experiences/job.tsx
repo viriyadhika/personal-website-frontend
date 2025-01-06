@@ -14,11 +14,7 @@ import {
 import ImageBorder from "../../components/image-border";
 import ImageWrap from "../../components/image";
 import { useState } from "react";
-import {
-  CheckCircleOutline,
-  DateRange,
-  KeyboardArrowDown,
-} from "@mui/icons-material";
+import { CheckCircle, DateRange, KeyboardArrowDown } from "@mui/icons-material";
 import { JOB_PUBLIC } from "@/configs/route";
 import SkillTag, { SkillTagProps } from "./skill-tag";
 
@@ -41,7 +37,12 @@ export default function Job({
 }: JobProps) {
   const [expand, setExpand] = useState(false);
   return (
-    <Card sx={{ maxWidth: "min(40%, 400px)", minWidth: 300 }}>
+    <Card
+      sx={{
+        maxWidth: "min(40%, 400px)",
+        minWidth: 300,
+      }}
+    >
       <CardHeader
         avatar={
           <ImageBorder size={100}>
@@ -53,17 +54,14 @@ export default function Job({
           <Stack direction={"column"}>
             <Typography variant={"h6"}>{title}</Typography>
             <Stack direction="row" gap={1} alignItems={"center"}>
-              <DateRange color={"primary"} />
-              <Typography>{date}</Typography>
+              <DateRange color="primary" fontSize={"small"} />
+              <Typography variant={"body2"}>{date}</Typography>
             </Stack>
           </Stack>
         }
       />
       <CardContent>
         <Stack direction={"column"} gap={1}>
-          <Typography>
-            <strong>Skillset</strong>
-          </Typography>
           <Box>
             <Stack direction={"row"} spacing={1} useFlexGap flexWrap={"wrap"}>
               {skills.map((skill) => (
@@ -95,8 +93,8 @@ export default function Job({
             return (
               <ListItemText key={idx}>
                 <Stack direction={"row"} spacing={1}>
-                  <CheckCircleOutline color="primary" />
-                  <Typography>{description}</Typography>
+                  <CheckCircle fontSize="small" color="success" />
+                  <Typography variant={"body2"}>{description}</Typography>
                 </Stack>
               </ListItemText>
             );

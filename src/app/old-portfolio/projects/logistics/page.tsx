@@ -15,13 +15,6 @@ export default function Logistics() {
       <Row>
         <Col>
           <h1>Logistics Website</h1>
-          <Button href="https://vi-try-django-logistics.herokuapp.com/">
-            Visit Logistics Website!
-          </Button>
-          <p style={{ color: "gray" }}>
-            {" "}
-            *Website might load slowly due to Heroku free plan
-          </p>
         </Col>
       </Row>
       <Row className="project-desc">

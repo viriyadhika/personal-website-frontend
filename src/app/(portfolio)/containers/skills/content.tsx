@@ -14,7 +14,7 @@ const categories: Category[] = [
   {
     name: "language",
     label: "Programming language",
-    images: ["javascript", "python", "java"],
+    images: ["typescript", "python", "java"],
   },
   {
     name: "frontend",

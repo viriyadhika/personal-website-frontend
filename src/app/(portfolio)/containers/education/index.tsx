@@ -8,8 +8,13 @@ import { ForwardedRef, forwardRef } from "react";
 
 const achievements: AchievementInfo[] = [
   {
-    title: "Computing courses taken",
+    title: "Courses",
     contents: [
+      {
+        title: "IT5003 - Data Structures and Algorithms",
+        date: "Feb 2024 - Apr 2023",
+        description: "3 Months courses on Data Structure and Algorithms",
+      },
       {
         title: "IT5002 - Computer Systems and Applications",
         date: "Jul 2023 - Dec 2023",

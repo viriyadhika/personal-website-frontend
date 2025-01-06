@@ -194,7 +194,7 @@ function SkillSets() {
   let languages = [
     ["Python", "/python.png"],
     ["Java", "/java.png"],
-    ["Javascript", "/javascript.png"],
+    ["TypeScript", "/typescript.png"],
     ["HTML", "/html.png"],
   ];
 

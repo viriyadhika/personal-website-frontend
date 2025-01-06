@@ -26,7 +26,7 @@ export default function Achievement({
   return (
     <Accordion key={achievement.title}>
       <AccordionSummary expandIcon={<ExpandMore />}>
-        <Typography variant={"h5"}>{achievement.title}</Typography>
+        <Typography variant={"h6"}>{achievement.title}</Typography>
       </AccordionSummary>
       {achievement.contents.map((content, idx) => (
         <AccordionDetails key={idx}>
