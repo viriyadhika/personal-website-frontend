@@ -32,8 +32,8 @@ const jobs: JobProps[] = [
         name: "Spring boot",
       },
       {
-        skillSrc: "AWS",
-        name: "aws",
+        skillSrc: "aws",
+        name: "AWS",
       },
       {
         skillSrc: "kubernetes",
