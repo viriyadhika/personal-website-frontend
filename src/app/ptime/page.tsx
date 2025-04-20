@@ -40,7 +40,7 @@ export default function PtimePage() {
     return <div>Loading ...</div>;
   }
 
-  const sortedRes = result.toSorted((a, b) => {
+  result.sort((a, b) => {
     if (a.v_type > b.v_type) {
       return -1;
     }
@@ -92,7 +92,7 @@ export default function PtimePage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedRes.map(({ v_type, date, ptime }) => (
+              {result.map(({ v_type, date, ptime }) => (
                 <TableRow
                   key={v_type + date}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
