@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { use, useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { dateManager } from "@/app/mock-generator/utils/utils";
 import { DatePicker } from "@/app/common/components/date-picker";
@@ -8,9 +8,10 @@ import { Stack } from "@mui/material";
 import { APIHandlerProvider } from "@/app/common/context/APIContext";
 import JobTable from "./components/table";
 
-type BatchesProps = { params: { id: string } };
+type BatchesProps = { params: Promise<{ id: string }> };
 
-function Batches({ params: { id } }: BatchesProps) {
+function Batches({ params }: BatchesProps) {
+  const { id } = use(params);
   const [current, setCurrent] = useState(() => dateManager().unix());
   const [comparison, setComparison] = useState(() => current - 24 * 3600);
 

@@ -61,7 +61,6 @@ export default function NumberParser({
     <>
       <strong>Number</strong>
       <Select
-        placeholder="Please select"
         onChange={(e) => {
           const value = e.target.value as NumberOption;
           onChange(defaultValueMap[value]);

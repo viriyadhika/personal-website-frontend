@@ -69,7 +69,6 @@ export default function StringParser({
     <>
       <strong>String</strong>
       <Select
-        placeholder="Please select"
         onChange={(e) => {
           const newValue = e.target.value as StringOption;
           onChange(defaultValueMap[newValue]);
