@@ -18,6 +18,7 @@ import {
 import { useAddTask, useUpdateTask } from "./services";
 import DeleteIcon from "@mui/icons-material/Delete";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Reminder from "./reminder";
 
 function useMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -93,6 +94,9 @@ function Task({
                 }}
               />
             </IconButton>
+          </MenuItem>
+          <MenuItem>
+            <Reminder todo_id={todo.id} />
           </MenuItem>
         </Menu>
       </ListItemButton>

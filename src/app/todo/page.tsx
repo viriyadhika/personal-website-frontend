@@ -14,6 +14,9 @@ import { TodoResponse } from "./types";
 import { Group } from "./components/group";
 import { useAddTask } from "./components/services";
 import { getAuthOptions } from "@/utilities/utils";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Register from "./components/register";
 
 const queryClient = new QueryClient();
 
@@ -51,7 +54,7 @@ function GroupWrapper({ data }: { data: Array<TodoResponse> }) {
 }
 
 function TodoPage() {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["todo-list"],
     queryFn: async () => {
       const response = await axios.get<Array<TodoResponse>>(
@@ -62,14 +65,19 @@ function TodoPage() {
     },
   });
 
-  const [open, setOpen] = useState(true);
+  if (isLoading) {
+    return <Typography>Loading ...</Typography>;
+  }
 
   if (!data) {
-    return <Typography>Loading ...</Typography>;
+    return <Typography>Error!</Typography>;
   }
 
   return (
     <Box flexDirection={"column"} p={2}>
+      <Box width={"fit-content"} ml="auto" pr={1}>
+        <Register />
+      </Box>
       <List
         sx={{ width: "100%", maxWidth: "1000px", bgcolor: "background.paper" }}
         component="nav"
@@ -82,8 +90,10 @@ function TodoPage() {
 
 export default function Page() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TodoPage />
-    </QueryClientProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <QueryClientProvider client={queryClient}>
+        <TodoPage />
+      </QueryClientProvider>
+    </LocalizationProvider>
   );
 }
