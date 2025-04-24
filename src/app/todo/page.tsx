@@ -1,7 +1,7 @@
 "use client";
 
 import List from "@mui/material/List";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Box, Button, ListItemButton, Typography } from "@mui/material";
 import {
   QueryClient,
@@ -17,8 +17,12 @@ import { getAuthOptions } from "@/utilities/utils";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Register from "./components/register";
+import { APIContext, APIHandlerProvider } from "../common/context/APIContext";
+import usePushLogin from "../common/hooks/use-push-login";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 0 } },
+});
 
 function GroupWrapper({ data }: { data: Array<TodoResponse> }) {
   const [groups, setGroups] = useState(data);
@@ -54,7 +58,7 @@ function GroupWrapper({ data }: { data: Array<TodoResponse> }) {
 }
 
 function TodoPage() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["todo-list"],
     queryFn: async () => {
       const response = await axios.get<Array<TodoResponse>>(
@@ -64,6 +68,16 @@ function TodoPage() {
       return response.data;
     },
   });
+
+  const { handleError } = usePushLogin();
+  const { onErrorAPI } = useContext(APIContext);
+
+  useEffect(() => {
+    if (error) {
+      onErrorAPI(error.message);
+      handleError(error);
+    }
+  }, [error]);
 
   if (isLoading) {
     return <Typography>Loading ...</Typography>;
@@ -90,10 +104,12 @@ function TodoPage() {
 
 export default function Page() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <QueryClientProvider client={queryClient}>
-        <TodoPage />
-      </QueryClientProvider>
-    </LocalizationProvider>
+    <APIHandlerProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <QueryClientProvider client={queryClient}>
+          <TodoPage />
+        </QueryClientProvider>
+      </LocalizationProvider>
+    </APIHandlerProvider>
   );
 }
