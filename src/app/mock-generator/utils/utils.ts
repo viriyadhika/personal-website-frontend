@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import weekday from "dayjs/plugin/weekday";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import {
   ArrayRule,
   ArrayRuleCategory,
@@ -16,6 +18,8 @@ export function editArray<T>(array: T[], item: T, idx: number) {
 
 export const dateManager = (function () {
   dayjs.extend(duration);
+  dayjs.extend(weekday);
+  dayjs.extend(isSameOrAfter);
   return dayjs;
 })();
 

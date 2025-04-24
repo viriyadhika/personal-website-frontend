@@ -19,6 +19,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Register from "./components/register";
 import { APIContext, APIHandlerProvider } from "../common/context/APIContext";
 import usePushLogin from "../common/hooks/use-push-login";
+import { SnackbarProvider } from "../common/context/SnackcbarContext";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 0 } },
@@ -105,11 +106,13 @@ function TodoPage() {
 export default function Page() {
   return (
     <APIHandlerProvider>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <QueryClientProvider client={queryClient}>
-          <TodoPage />
-        </QueryClientProvider>
-      </LocalizationProvider>
+      <SnackbarProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <QueryClientProvider client={queryClient}>
+            <TodoPage />
+          </QueryClientProvider>
+        </LocalizationProvider>
+      </SnackbarProvider>
     </APIHandlerProvider>
   );
 }

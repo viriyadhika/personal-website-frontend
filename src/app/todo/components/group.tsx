@@ -96,7 +96,7 @@ function Task({
             </IconButton>
           </MenuItem>
           <MenuItem>
-            <Reminder todo_id={todo.id} />
+            <Reminder todo_id={todo.id} handleClose={handleClose} />
           </MenuItem>
         </Menu>
       </ListItemButton>
