@@ -20,6 +20,7 @@ import Register from "./components/register";
 import { APIContext, APIHandlerProvider } from "../common/context/APIContext";
 import usePushLogin from "../common/hooks/use-push-login";
 import { SnackbarProvider } from "../common/context/SnackcbarContext";
+import Link from "next/link";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 0 } },
@@ -30,7 +31,14 @@ function GroupWrapper({ data }: { data: Array<TodoResponse> }) {
   const { mutate } = useAddTask({ parent_task: null }, ({ id }) => {
     setGroups((cur) => [
       ...cur,
-      { id, desc: "", created_by: "", is_done: false, todos: [] },
+      {
+        id,
+        desc: "",
+        created_by: "",
+        done_date: "",
+        is_done: false,
+        todos: [],
+      },
     ]);
   });
 
@@ -90,7 +98,15 @@ function TodoPage() {
 
   return (
     <Box flexDirection={"column"} p={2}>
-      <Box width={"fit-content"} ml="auto" pr={1}>
+      <Box
+        width={"fit-content"}
+        ml="auto"
+        display={"flex"}
+        alignItems={"center"}
+        gap={1}
+        pr={1}
+      >
+        <Link href="/todo/journal">Journal</Link>
         <Register />
       </Box>
       <List

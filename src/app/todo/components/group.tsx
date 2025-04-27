@@ -126,7 +126,14 @@ export function Group({
   const { mutate } = useAddTask({ parent_task: grp.id }, ({ id }) => {
     setTasks((cur) => [
       ...cur,
-      { id, desc: "", created_by: "", is_done: false, todos: [] },
+      {
+        id,
+        desc: "",
+        created_by: "",
+        is_done: false,
+        done_date: "",
+        todos: [],
+      },
     ]);
   });
   const { changeDesc, deleteTask, changeDone } = useUpdateTask(
