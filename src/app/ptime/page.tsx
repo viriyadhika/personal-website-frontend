@@ -18,7 +18,8 @@ import axios from "axios";
 import { PtimeResponse } from "./types";
 import { NEXT_PUBLIC_API_URL } from "@/env/env";
 
-const options = ["ID", "SG"];
+const nonCtry = " ";
+const options = ["ID", "SG", "CA", nonCtry];
 
 export default function PtimePage() {
   const [option, setOption] = useState(options[0]);
@@ -40,25 +41,6 @@ export default function PtimePage() {
     return <div>Loading ...</div>;
   }
 
-  result.sort((a, b) => {
-    if (a.v_type > b.v_type) {
-      return -1;
-    }
-    if (a.v_type < b.v_type) {
-      return 1;
-    }
-
-    if (a.date > b.date) {
-      return -1;
-    }
-
-    if (a.date < b.date) {
-      return 1;
-    }
-
-    return -1;
-  });
-
   return (
     <APIHandlerProvider>
       <Box
@@ -78,7 +60,7 @@ export default function PtimePage() {
         >
           {options.map((opt) => (
             <MenuItem key={opt} value={opt}>
-              {opt}
+              {opt === nonCtry ? "No Ctry" : opt}
             </MenuItem>
           ))}
         </Select>
