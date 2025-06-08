@@ -49,6 +49,19 @@ export function useUpdateTask(
     onSuccess,
   });
 
+  const { mutate: deleteMutate } = useMutation({
+    mutationKey: ["task-delete"],
+    mutationFn: async () => {
+      const response = await axios.post<{ id: number }>(
+        `${NEXT_PUBLIC_API_URL}/todo/delete`,
+        { id: current.id },
+        getAuthOptions()
+      );
+      return response.data;
+    },
+    onSuccess,
+  });
+
   const { mutate: doneMutate } = useMutation({
     mutationKey: ["task-done"],
     mutationFn: async (is_done: boolean) => {
@@ -62,17 +75,23 @@ export function useUpdateTask(
     onSuccess,
   });
 
-  const debouncedMutate = useMemo(
+  const debouncedUpdateMutate = useMemo(
     () => debounce(updateMutate, 1000),
     [updateMutate]
   );
 
   return {
     deleteTask: () => {
-      updateMutate({ ...current, is_deleted: true });
+      if (current.desc === "") {
+        // Delete if the description is blank
+        deleteMutate();
+      } else {
+        // Otherwise mark it as deleted in DB
+        updateMutate({ ...current, is_deleted: true });
+      }
     },
     changeDesc: (newDesc: string) => {
-      debouncedMutate({ ...current, desc: newDesc });
+      debouncedUpdateMutate({ ...current, desc: newDesc });
     },
     changeDone: (newDone: boolean) => {
       doneMutate(newDone);
