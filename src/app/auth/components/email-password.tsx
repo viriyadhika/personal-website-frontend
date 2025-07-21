@@ -43,6 +43,7 @@ function EmailPassword({ onValid, title, isProcessing }: EmailPasswordProps) {
               required={true}
               label="Password"
               variant="outlined"
+              type="password"
             />
             <Button type="submit" variant="contained" disabled={isProcessing}>
               {title}
