@@ -10,5 +10,5 @@ export type Batch = {
   batch_id: string;
   job_location: string;
   keywords: string;
-  last_updated: number;
+  last_updated: string;
 };

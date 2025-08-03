@@ -60,7 +60,9 @@ function Batches() {
                     {batch_id}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {dayjs.unix(last_updated).format("DD/MM/YYYY HH:mm (Z)")}
+                    {dayjs(last_updated.slice(0, 23)).format(
+                      "YYYY-MM-DD HH:mm"
+                    )}
                   </TableCell>
                   <TableCell>
                     <Button
