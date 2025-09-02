@@ -15,10 +15,13 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { useAddTask, useUpdateTask } from "./services";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { useAddTask, useUpdatePriority, useUpdateTask } from "./services";
+import DeleteIcon from "@mui/icons-material/Delete"
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Reminder from "./reminder";
+import { getReorderedTodoResponse } from "./utils";
 
 function useMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -40,9 +43,15 @@ function useMenu() {
 function Task({
   todo,
   onDelete,
+  onReorder,
+  showUpOrder,
+  showDownOrder
 }: {
   todo: TodoResponse;
   onDelete: () => void;
+  onReorder: (isGoingUp: boolean) => void;
+  showUpOrder: boolean
+  showDownOrder: boolean
 }) {
   const [state, setState] = useState({
     checked: todo.is_done,
@@ -55,6 +64,9 @@ function Task({
     { desc: state.input, is_deleted: false, id: todo.id },
     () => {}
   );
+
+  const updatePriority = useUpdatePriority()
+
 
   return (
     <>
@@ -79,6 +91,16 @@ function Task({
             />
           }
         />
+       {showUpOrder && (<IconButton onClick={() => {
+        onReorder(true)
+       }}>
+          <ArrowDropUpIcon />
+        </IconButton>)}
+        {showDownOrder && (<IconButton onClick={() => {
+          onReorder(false)
+        }}>
+          <ArrowDropDownIcon />
+        </IconButton>)}
         <IconButton onClick={handleClick}>
           <MoreHorizIcon />
         </IconButton>
@@ -100,13 +122,20 @@ function Task({
           </MenuItem>
         </Menu>
       </ListItemButton>
-      {subTasks.map((subTask) => {
+      {subTasks.map((subTask, idx) => {
         <Task
           key={subTask.id}
           todo={subTask}
           onDelete={() => {
             setSubTasks((cur) => cur.filter((item) => item.id !== subTask.id));
           }}
+          onReorder={(isGoingUp) => {
+            const newOrder = getReorderedTodoResponse(subTasks, idx, isGoingUp)
+            updatePriority(newOrder.map((item, idx) => ({ id: item.id, priority: idx })))
+            setSubTasks(newOrder)
+          }}
+          showUpOrder={idx !== 0}
+          showDownOrder={idx !== subTasks.length - 1}
         />;
       })}
     </>
@@ -121,9 +150,10 @@ export function Group({
   onDelete: () => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [state, setState] = useState({ checked: grp.is_done, input: grp.desc });
+  const [state, setState] = useState({ checked: grp.is_done, input: grp.desc, priority: grp.priority });
   const [tasks, setTasks] = useState(grp.todos);
   const { mutate } = useAddTask({ parent_task: grp.id }, ({ id }) => {
+    const maxPriority = tasks.reduce((prevValue, curValue) => Math.max(prevValue, curValue.priority), 0)
     setTasks((cur) => [
       ...cur,
       {
@@ -133,6 +163,7 @@ export function Group({
         is_done: false,
         done_date: "",
         todos: [],
+        priority: maxPriority + 1
       },
     ]);
   });
@@ -140,6 +171,8 @@ export function Group({
     { desc: state.input, is_deleted: false, id: grp.id },
     () => {}
   );
+
+  const updatePriority = useUpdatePriority()
 
   return (
     <>
@@ -189,7 +222,7 @@ export function Group({
       </ListItemButton>
       <Collapse in={open} timeout="auto">
         <List component="div" disablePadding sx={{ pl: 2 }}>
-          {tasks.map((task) => {
+          {tasks.map((task, idx) => {
             return (
               <Task
                 key={task.id}
@@ -197,6 +230,13 @@ export function Group({
                 onDelete={() => {
                   setTasks((cur) => cur.filter((item) => item.id !== task.id));
                 }}
+                onReorder={(isGoingUp) => {
+                  const newOrder = getReorderedTodoResponse(tasks, idx, isGoingUp)
+                  updatePriority(newOrder.map((item, idx) => ({ id: item.id, priority: idx })))
+                  setTasks(newOrder)
+                }}
+                showUpOrder={idx !== 0}
+                showDownOrder={idx !== tasks.length - 1}
               />
             );
           })}

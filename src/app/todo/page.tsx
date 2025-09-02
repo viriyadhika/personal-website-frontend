@@ -29,6 +29,7 @@ const queryClient = new QueryClient({
 function GroupWrapper({ data }: { data: Array<TodoResponse> }) {
   const [groups, setGroups] = useState(data);
   const { mutate } = useAddTask({ parent_task: null }, ({ id }) => {
+    const maxPriority = groups.reduce((prevValue, curValue) => Math.max(prevValue, curValue.priority), 0)
     setGroups((cur) => [
       ...cur,
       {
@@ -38,6 +39,7 @@ function GroupWrapper({ data }: { data: Array<TodoResponse> }) {
         done_date: "",
         is_done: false,
         todos: [],
+        priority: maxPriority + 1
       },
     ]);
   });

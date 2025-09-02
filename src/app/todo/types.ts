@@ -5,4 +5,5 @@ export type TodoResponse = {
   is_done: boolean;
   done_date: string;
   todos: Array<TodoResponse>;
+  priority: number
 };

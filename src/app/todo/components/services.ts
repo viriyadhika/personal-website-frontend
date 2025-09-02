@@ -98,3 +98,24 @@ export function useUpdateTask(
     },
   };
 }
+
+export type UpdateTodoPriorityRequest = {
+  id: number,
+  priority: number
+}
+
+export function useUpdatePriority() {
+  const { mutate } = useMutation({
+    mutationKey: ["task-priority-update"],
+    mutationFn: async (request: Array<UpdateTodoPriorityRequest>) => {
+      const response = await axios.post<Array<UpdateTodoPriorityRequest>>(
+        `${NEXT_PUBLIC_API_URL}/todo/update-priority`,
+        request,
+        getAuthOptions()
+      );
+      return response.data;
+    },
+  });
+
+  return mutate
+}
