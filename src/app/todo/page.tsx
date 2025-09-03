@@ -99,7 +99,7 @@ function TodoPage() {
   }
 
   return (
-    <Box flexDirection={"column"} p={2}>
+    <Box flexDirection={"column"}>
       <Box
         width={"fit-content"}
         ml="auto"
