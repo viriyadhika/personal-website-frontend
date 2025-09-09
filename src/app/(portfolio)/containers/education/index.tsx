@@ -79,10 +79,28 @@ const achievements: AchievementInfo[] = [
   },
 ];
 
-function Education(_: {}, ref: ForwardedRef<HTMLDivElement>) {
+function Schools() {
   return (
-    <Stack p={2} gap={2} ref={ref}>
-      <Typography variant={"h4"}>Education & Achievement</Typography>
+    <Stack gap={2}>
+      <Stack
+        direction={"row"}
+        alignItems={"center"}
+        useFlexGap
+        flexWrap={"wrap"}
+        gap={2}
+      >
+        <Box display={"flex"} justifyContent="center">
+          <ImageBorder size={120}>
+            <ImageWrap size={100} rounded src={`${PORTFOLIO_PUBLIC}/UofT`} />
+          </ImageBorder>
+        </Box>
+        <Box minWidth={250}>
+          <Typography variant={"h5"}>
+            University of Toronto
+          </Typography>
+          <Typography variant="h6">Master of Science in Applied Computing (Ongoing)</Typography>
+        </Box>
+      </Stack>
       <Stack
         direction={"row"}
         alignItems={"center"}
@@ -108,6 +126,15 @@ function Education(_: {}, ref: ForwardedRef<HTMLDivElement>) {
           </Typography>
         </Box>
       </Stack>
+    </Stack>
+  )
+}
+
+function Education(_: {}, ref: ForwardedRef<HTMLDivElement>) {
+  return (
+    <Stack p={2} gap={2} ref={ref}>
+      <Typography variant={"h4"}>Education & Achievement</Typography>
+      <Schools />
       <Box maxWidth={"50%"} minWidth={300}>
         {achievements.map((achievement) => (
           <Achievement key={achievement.title} achievement={achievement} />

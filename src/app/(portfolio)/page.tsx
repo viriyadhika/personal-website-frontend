@@ -10,7 +10,6 @@ import Education from "./containers/education";
 import useScroll from "./hooks/use-scroll";
 
 const Skills = lazy(() => import("./containers/skills"));
-const Projects = lazy(() => import("./containers/projects"));
 
 export default function Page() {
   const { scrollTo, experienceRef, skillsRef, educationRef } = useScroll();
@@ -22,7 +21,6 @@ export default function Page() {
         <NavBar onClick={scrollTo} />
         <Experiences ref={experienceRef} />
         <Education ref={educationRef} />
-        <Projects />
         <Skills ref={skillsRef} />
       </Box>
     </ThemeProvider>

@@ -110,10 +110,8 @@ export default function Home() {
               <br /> I&apos;m <Emphasize>Viriyadhika</Emphasize>
             </Typography>
             <Typography variant={"subheading"} color={"grey.400"}>
-              I&apos;m a <Emphasize>Software Engineer</Emphasize> currently
-              based in Singapore.
-              <br />I enjoy building cool{" "}
-              <Emphasize>Web Applications</Emphasize>.
+              I&apos;m a <Emphasize>Master Student in AI</Emphasize> currently
+              in <Emphasize>Toronto</Emphasize>.
             </Typography>
           </Stack>
           <Stack direction="row" spacing={2}>

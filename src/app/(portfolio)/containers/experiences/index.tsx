@@ -9,10 +9,15 @@ const jobs: JobProps[] = [
     image: "gic",
     date: "Aug 2024 - Present",
     descriptions: [
-      `Built ETL pipelines and CI/CD deployment scripts to centralize company-wide financial instruments database using Amazon Web Services and Java Spring Boot, deployed in Kubernetes.`,
-      `Created a highly concurrent Python API for data reconciliation to maintain data quality within the pipeline.`,
-      `Developed a Python tool to parse requirement specifications and automate code generation.`,
-      `Developed a full-stack web application as an internal tool for data quality automation.`,
+      `Built ETL pipelines and CI/CD deployment scripts to centralize financial instruments data processing from
+multiple sources using Amazon Web Services and Java Spring Boot, deployed on Kubernetes, and used by major
+downstream applications company-wide`,
+      `Enhanced a highly concurrent FastAPI Python application for data reconciliation to maintain data quality across
+100+ tables, reducing runtime of data quality scripts from 3 days to 4 hours per run, enabling checks to run
+multiple times daily instead of weekly.`,
+      `Developed a Python tool to parse requirement specifications and generate boilerplate code, improving accuracy
+and saving developer hours.`,
+      `Developed a full-stack web application as an internal tool for production support.`,
     ],
     skills: [
       {
