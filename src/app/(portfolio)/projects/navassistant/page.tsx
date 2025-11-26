@@ -74,7 +74,7 @@ function RLVideos() {
 
           <Grid container spacing={2}>
             {section.videos.map((v) => (
-              <Grid key={v.title} item xs={12} sm={6} md={4}>
+              <Grid key={v.title}>
                 <Card>
                   <CardContent sx={{ p: 1.5 }}>
                     <Typography variant="subtitle2" gutterBottom noWrap>
