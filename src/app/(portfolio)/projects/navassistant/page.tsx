@@ -15,16 +15,25 @@ interface RLSection {
 // ---- Example Data (13 experiments) ----
 const randomPath = "/portfolio/projects/navassistant/random"
 const slidingWindowRandomResNetPath = "/portfolio/projects/navassistant/slliding_window_random_resnet"
-const noCuriosityPath = "/portfolio/projects/navassistant/no_curiosity"
-const pcaPath = "/portfolio/projects/navassistant/pca"
+const noCuriosityPath = "/portfolio/projects/navassistant/sliding_window_no_curiosity"
+const pcaPath = "/portfolio/projects/navassistant/sliding_window_pca"
 const newEnvPath = "/portfolio/projects/navassistant/new_env"
+const localAttnResNet = "/portfolio/projects/navassistant/local_attn_random_resnet"
 const sections: RLSection[] = [
-    {
+  {
     subheader: "Random Path",
     videos: [
       { title: "Center Point", src: `${randomPath}/rolloutcenter_point.mp4`, img: `${randomPath}/rolloutcenter_point.png` },
       { title: "Inside Room", src: `${randomPath}/rolloutinside_room.mp4`, img: `${randomPath}/rolloutinside_room.png` },
       { title: "Trapped on the corner", src: `${randomPath}/rollouttrapped.mp4`, img: `${randomPath}/rollouttrapped.png` },
+    ],
+  },
+  {
+    subheader: "Local attention ResNet-18 with trainable projection head",
+    videos: [
+      { title: "Center Point", src: `${localAttnResNet}/rolloutcenter_point.mp4`, img: `${localAttnResNet}/rolloutcenter_point.png` },
+      { title: "Inside Room", src: `${localAttnResNet}/rolloutinside_room.mp4`, img: `${localAttnResNet}/rolloutinside_room.png` },
+      { title: "Trapped on the corner", src: `${localAttnResNet}/rollouttrapped.mp4`, img: `${localAttnResNet}/rollouttrapped.png` },
     ],
   },
   {
