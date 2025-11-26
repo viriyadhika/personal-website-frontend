@@ -61,9 +61,9 @@ const sections: RLSection[] = [
   },
 ];
 
-function RLVideos(_: {}, ref: ForwardedRef<HTMLDivElement>) {
+function RLVideos() {
   return (
-    <Stack p={2} spacing={4} ref={ref}>
+    <Stack p={2} spacing={4}>
       <Typography variant="h4">Reinforcement Learning Results</Typography>
 
       {sections.map((section, idx) => (
@@ -123,4 +123,4 @@ function RLVideos(_: {}, ref: ForwardedRef<HTMLDivElement>) {
   );
 }
 
-export default forwardRef(RLVideos);
+export default RLVideos;
