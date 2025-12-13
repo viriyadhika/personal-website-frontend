@@ -135,7 +135,7 @@ function Education(_: {}, ref: ForwardedRef<HTMLDivElement>) {
     <Stack p={2} gap={2} ref={ref}>
       <Typography variant={"h4"}>Education & Achievement</Typography>
       <Schools />
-      <Box maxWidth={"50%"} minWidth={300}>
+      <Box minWidth={300}>
         {achievements.map((achievement) => (
           <Achievement key={achievement.title} achievement={achievement} />
         ))}

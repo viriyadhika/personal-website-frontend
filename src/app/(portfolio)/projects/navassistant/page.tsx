@@ -1,10 +1,17 @@
-import { Stack, Typography, Card, CardContent, Grid, Box } from "@mui/material";
-import { forwardRef, ForwardedRef } from "react";
+import {
+  Stack,
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  Box,
+  Divider,
+} from "@mui/material";
 
 interface RLVideoItem {
   title: string;
-  src: string;  // video path
-  img: string;  // trajectory image path
+  src: string;
+  img: string;
 }
 
 interface RLSection {
@@ -12,124 +19,177 @@ interface RLSection {
   videos: RLVideoItem[];
 }
 
-// ---- Example Data (13 experiments) ----
-const randomPath = "/portfolio/projects/navassistant/random"
-const slidingWindowRandomResNetPath = "/portfolio/projects/navassistant/slliding_window_random_resnet"
-const noCuriosityPath = "/portfolio/projects/navassistant/sliding_window_no_curiosity"
-const pcaPath = "/portfolio/projects/navassistant/sliding_window_pca"
-const newEnvPath = "/portfolio/projects/navassistant/new_env"
-const localAttnResNet = "/portfolio/projects/navassistant/local_attn_random_resnet"
+/* ---------- Data ---------- */
+
+const BASE = "/portfolio/projects/navassistant";
+
+const paths = {
+  random: `${BASE}/random`,
+  slidingRandom: `${BASE}/slliding_window_random_resnet`,
+  noCuriosity: `${BASE}/sliding_window_no_curiosity`,
+  pca: `${BASE}/sliding_window_pca`,
+  newEnv: `${BASE}/new_env`,
+  localAttn: `${BASE}/local_attn_random_resnet`,
+};
+
+const makeVideos = (path: string, insideLabel = "Inside Room") => [
+  {
+    title: "Center Point",
+    src: `${path}/rolloutcenter_point.mp4`,
+    img: `${path}/rolloutcenter_point.png`,
+  },
+  {
+    title: insideLabel,
+    src: `${path}/rolloutinside_room.mp4`,
+    img: `${path}/rolloutinside_room.png`,
+  },
+  {
+    title: "Trapped Corner",
+    src: `${path}/rollouttrapped.mp4`,
+    img: `${path}/rollouttrapped.png`,
+  },
+];
+
 const sections: RLSection[] = [
   {
-    subheader: "Random Path",
-    videos: [
-      { title: "Center Point", src: `${randomPath}/rolloutcenter_point.mp4`, img: `${randomPath}/rolloutcenter_point.png` },
-      { title: "Inside Room", src: `${randomPath}/rolloutinside_room.mp4`, img: `${randomPath}/rolloutinside_room.png` },
-      { title: "Trapped on the corner", src: `${randomPath}/rollouttrapped.mp4`, img: `${randomPath}/rollouttrapped.png` },
-    ],
+    subheader: "Random Policy Baseline",
+    videos: makeVideos(paths.random),
   },
   {
-    subheader: "Local attention ResNet-18 with trainable projection head",
-    videos: [
-      { title: "Center Point", src: `${localAttnResNet}/rolloutcenter_point.mp4`, img: `${localAttnResNet}/rolloutcenter_point.png` },
-      { title: "Inside Room", src: `${localAttnResNet}/rolloutinside_room.mp4`, img: `${localAttnResNet}/rolloutinside_room.png` },
-      { title: "Trapped on the corner", src: `${localAttnResNet}/rollouttrapped.mp4`, img: `${localAttnResNet}/rollouttrapped.png` },
-    ],
+    subheader: "Local Attention ResNet-18",
+    videos: makeVideos(paths.localAttn),
   },
   {
-    subheader: "Sliding Window Transformer with Frozen ResNet Encoder and Random Encoder Embedding",
-    videos: [
-      { title: "Center Point", src: `${slidingWindowRandomResNetPath}/rolloutcenter_point.mp4`, img: `${slidingWindowRandomResNetPath}/rolloutcenter_point.png` },
-      { title: "Inside Room", src: `${slidingWindowRandomResNetPath}/rolloutinside_room.mp4`, img: `${slidingWindowRandomResNetPath}/rolloutinside_room.png` },
-      { title: "Trapped on the corner", src: `${slidingWindowRandomResNetPath}/rollouttrapped.mp4`, img: `${slidingWindowRandomResNetPath}/rollouttrapped.png` },
-    ],
+    subheader: "Sliding Window Transformer (Random Embedding)",
+    videos: makeVideos(paths.slidingRandom),
   },
   {
-    subheader: "Sliding Window Transformer with Frozen ResNet with no Curiosity",
-    videos: [
-      { title: "Center Point", src: `${noCuriosityPath}/rolloutcenter_point.mp4`, img: `${noCuriosityPath}/rolloutcenter_point.png` },
-      { title: "Inside Room", src: `${noCuriosityPath}/rolloutinside_room.mp4`, img: `${noCuriosityPath}/rolloutinside_room.png` },
-      { title: "Trapped on the corner", src: `${noCuriosityPath}/rollouttrapped.mp4`, img: `${noCuriosityPath}/rollouttrapped.png` },
-    ],
+    subheader: "Sliding Window Transformer (No Curiosity)",
+    videos: makeVideos(paths.noCuriosity),
   },
   {
-    subheader: "Sliding Window Transformer with Frozen ResNet Encoder and PCA Head",
-    videos: [
-      { title: "Center Point", src: `${pcaPath}/rolloutcenter_point.mp4`, img: `${pcaPath}/rolloutcenter_point.png` },
-      { title: "Inside Room", src: `${pcaPath}/rolloutinside_room.mp4`, img: `${pcaPath}/rolloutinside_room.png` },
-      { title: "Trapped on the corner", src: `${pcaPath}/rollouttrapped.mp4`, img: `${pcaPath}/rollouttrapped.png` },
-    ],
+    subheader: "Sliding Window Transformer (PCA Head)",
+    videos: makeVideos(paths.pca),
   },
   {
-    subheader: "New Environment - Sliding Window Transformer with Frozen ResNet Encoder and PCA Head",
+    subheader: "New Environment (PCA Head)",
     videos: [
-    { title: "Center Point", src: `${newEnvPath}/rolloutcenter_point.mp4`, img: `${newEnvPath}/rolloutcenter_point.png` },
-      { title: "Inside Bedroom", src: `${newEnvPath}/rolloutinside_bedroom.mp4`, img: `${newEnvPath}/rolloutinside_bedroom.png` },
-      { title: "Inside Toilet", src: `${newEnvPath}/rolloutinside_toilet.mp4`, img: `${newEnvPath}/rolloutinside_toilet.png` },
+      {
+        title: "Center Point",
+        src: `${paths.newEnv}/rolloutcenter_point.mp4`,
+        img: `${paths.newEnv}/rolloutcenter_point.png`,
+      },
+      {
+        title: "Bedroom",
+        src: `${paths.newEnv}/rolloutinside_bedroom.mp4`,
+        img: `${paths.newEnv}/rolloutinside_bedroom.png`,
+      },
+      {
+        title: "Toilet",
+        src: `${paths.newEnv}/rolloutinside_toilet.mp4`,
+        img: `${paths.newEnv}/rolloutinside_toilet.png`,
+      },
     ],
   },
 ];
 
-function RLVideos() {
+/* ---------- Components ---------- */
+
+function VideoTile({ title, src, img }: RLVideoItem) {
   return (
-    <Stack p={2} spacing={4}>
-      <Typography variant="h4">Reinforcement Learning Results</Typography>
+    <Card
+      elevation={2}
+      sx={{
+        height: "100%",
+        transition: "0.2s",
+        "&:hover": { transform: "translateY(-2px)", boxShadow: 4 },
+      }}
+    >
+      <CardContent sx={{ p: 2 }}>
+        <Typography
+          variant="subtitle2"
+          fontWeight={600}
+          mb={1}
+          textAlign="center"
+        >
+          {title}
+        </Typography>
 
-      {sections.map((section, idx) => (
-        <Stack key={idx} spacing={2}>
-          <Typography variant="h6" color="text.secondary">
-            {section.subheader}
-          </Typography>
+        <Box display="flex" gap={1}>
+          <MediaBox>
+            <video src={src} controls />
+          </MediaBox>
 
-          <Grid container spacing={2}>
-            {section.videos.map((v) => (
-              <Grid key={v.title}>
-                <Card>
-                  <CardContent sx={{ p: 1.5 }}>
-                    <Typography variant="subtitle2" gutterBottom noWrap>
-                      {v.title}
-                    </Typography>
+          <MediaBox>
+            <img src={img} alt={`${title} trajectory`} />
+          </MediaBox>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+}
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        gap: 1,
-                        alignItems: "center",
-                      }}
-                    >
-                      {/* Video */}
-                      <video
-                        src={v.src}
-                        controls
-                        style={{
-                          width: "50%",
-                          maxHeight: 240,
-                          objectFit: "cover",
-                          borderRadius: 6,
-                        }}
-                      />
+function MediaBox({ children }: { children: React.ReactNode }) {
+  return (
+    <Box
+      sx={{
+        flex: 1,
+        bgcolor: "grey.100",
+        borderRadius: 1,
+        overflow: "hidden",
+        "& video, & img": {
+          width: "100%",
+          height: 220,
+          objectFit: "cover",
+        },
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
 
-                      {/* Trajectory Image */}
-                      <img
-                        src={v.img}
-                        alt={v.title + " trajectory"}
-                        style={{
-                          width: "50%",
-                          maxHeight: 240,
-                          objectFit: "contain",
-                          borderRadius: 6,
-                        }}
-                      />
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Stack>
+/* ---------- Main ---------- */
+
+export default function RLVideos() {
+  return (
+    <Stack spacing={5} p={3}>
+      <Box>
+        <Typography variant="h4" fontWeight={700}>
+          Reinforcement Learning Results
+        </Typography>
+        <Typography color="text.secondary">
+          Qualitative rollout comparisons across models and environments
+        </Typography>
+      </Box>
+
+      {sections.map((section) => (
+        <Card
+          key={section.subheader}
+          elevation={0}
+          sx={{
+            bgcolor: "grey.50",
+            border: "1px solid",
+            borderColor: "grey.200",
+          }}
+        >
+          <CardContent sx={{ p: 3 }}>
+            <Typography variant="h6" fontWeight={600} mb={1}>
+              {section.subheader}
+            </Typography>
+
+            <Divider sx={{ mb: 3 }} />
+
+            <Grid container spacing={3}>
+              {section.videos.map((video) => (
+                <Grid key={video.title}>
+                  <VideoTile {...video} />
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
+        </Card>
       ))}
     </Stack>
   );
 }
-
-export default RLVideos;

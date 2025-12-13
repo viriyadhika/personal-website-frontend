@@ -14,22 +14,22 @@ const categories: Category[] = [
   {
     name: "language",
     label: "Programming language",
-    images: ["typescript", "python", "java"],
+    images: ["python", "typescript", "java"],
   },
   {
     name: "frontend",
     label: "Front-end",
-    images: ["android_studio", "react", "bootstrap"],
+    images: ["react", "bootstrap"],
   },
   {
     name: "backend",
     label: "Back-end",
-    images: ["django", "drf"],
+    images: ["fastapi", "springboot"],
   },
   {
     name: "devops",
-    label: "Dev Ops",
-    images: ["nginx", "docker"],
+    label: "Deployment & DevOps",
+    images: ["kubernetes", "aws", "nginx", "docker"],
   },
 ];
 

@@ -41,6 +41,7 @@ export default function Job({
       sx={{
         maxWidth: "min(40%, 400px)",
         minWidth: 300,
+        bgcolor: "grey.100"
       }}
     >
       <CardHeader
@@ -71,7 +72,7 @@ export default function Job({
           </Box>
         </Stack>
       </CardContent>
-      <CardActions>
+      <CardActions >
         <Button
           endIcon={
             <KeyboardArrowDown
