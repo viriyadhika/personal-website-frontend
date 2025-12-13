@@ -16,7 +16,7 @@ import ImageWrap from "../../components/image";
 import { useState } from "react";
 import { CheckCircle, DateRange, KeyboardArrowDown } from "@mui/icons-material";
 import { JOB_PUBLIC } from "@/configs/route";
-import SkillTag, { SkillTagProps } from "./skill-tag";
+import SkillTag, { SkillTagProps } from "../../components/skill-tag";
 
 export type JobProps = {
   company: string;

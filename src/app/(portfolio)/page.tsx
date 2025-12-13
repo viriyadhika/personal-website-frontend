@@ -8,6 +8,7 @@ import { lazy } from "react";
 import theme from "./theme";
 import Education from "./containers/education";
 import useScroll from "./hooks/use-scroll";
+import Projects from "./containers/projects";
 
 const Skills = lazy(() => import("./containers/skills"));
 
@@ -20,6 +21,7 @@ export default function Page() {
         <Home />
         <NavBar onClick={scrollTo} />
         <Experiences ref={experienceRef} />
+        <Projects />
         <Education ref={educationRef} />
         <Skills ref={skillsRef} />
       </Box>
